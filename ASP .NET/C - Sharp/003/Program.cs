@@ -2,18 +2,24 @@
 
 using _003;
 
-//    ...Candidate Details...
-/*Candidate candidate = new Candidate();
-candidate.getCandidateDetails();
-candidate.displayCandidateDetails();*/
+// =============== Candidate Details ===============
 
-//    ...Bank Account Details...
+Candidate candidate = new Candidate();
+candidate.getCandidateDetails();
+candidate.displayCandidateDetails();
+
+
+
+// =============== Bank Account Details ===============
+
 /*Bank_Account bank = new Bank_Account();
 bank.getAccountDetails();
 bank.displayAccountDetails();*/
 
 
-//    ...Student Details...
+
+// =============== Student Details ===============
+
 /*Console.Write("Enter the Enrollment no. : ");
 long enrollment_no = Convert.ToInt64(Console.ReadLine());
 Console.Write("Enter the Semester : ");
@@ -29,7 +35,9 @@ Student stu = new Student(enrollment_no, sem, spi, cpi, name);
 stu.displayStudentDetails();*/
 
 
-//     ...Calculate Salary...
+
+// =============== Calculate Salary ===============
+
 /*Console.Write("Enter the basic salary : ");
 double basic = Convert.ToDouble(Console.ReadLine());
 Console.Write("Enter the TA : ");
@@ -39,14 +47,19 @@ Salary salary = new Salary(basic, ta);
 salary.displaySalary();*/
 
 
-//     ...Calculate Distance...
+
+// =============== Calculate Distance ===============
+
 /*Console.Write("Enter the first distance : ");
 double d1 = Convert.ToDouble(Console.ReadLine());
 Console.Write("Enter the second distance : ");
 double d2 = Convert.ToDouble(Console.ReadLine());
 Distance distance = new Distance(d1, d2);*/
 
-//      ...Inheritance...
+
+
+// =============== Inheritance ===============
+
 /*Table table = new Table();
 Console.WriteLine(table.material);
 Console.WriteLine(table.price);*/

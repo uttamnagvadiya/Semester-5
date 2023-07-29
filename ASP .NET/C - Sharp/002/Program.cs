@@ -4,23 +4,23 @@ using _002;
 
 Fundamentals f = new Fundamentals();
 
-//  calculate body mass index (BMI)
+//  ===== calculate body mass index (BMI)
 //  f.bodyMassIndex();
 
-//  calculate percentage
+//  ===== calculate percentage
 f.calculatePercentage();
 
-//  check prime number
+//  ===== check prime number
 //  f.checkPrimeNumber();
 
-//  check leap year
+//  ===== check leap year
 //  f.checkLeapYear();
 
-//  print the fibonacci series
+//  ===== print the fibonacci series
 //  f.fibonacciSeries();
 
-//  decimal to binary
+//  ===== decimal to binary
 //  f.decimalToBinary();
 
-//  calculate nPr
+//  ===== calculate nPr
 //  f.calculate_nPr();

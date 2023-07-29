@@ -5,26 +5,26 @@ Console.WriteLine("Hello, World!\n");
 
 Fundamentals f =  new Fundamentals();
 
-//  print own details
+//  ===== print own details
     f.displayDetails();
 
-//  get input from user
+//  ===== get input from user
 //  f.getDetailsFromUser();
 
-//  calculate area of rectangle & circle.
+//  ===== calculate areas of rectangle & circle.
 //  f.calculateArea();
 
-//  calculate temperature
+//  ===== calculate temperature
 //  f.calculateTemperature();
 
-//  calculate simple intrest
+//  ===== calculate simple intrest
 //  f.simpleIntrest();
 
-//  simple calculator
+//  ===== simple calculator
 //  f.simpleCalculator();
 
-//  maximum number of 3
+//  ===== maximum number of 3
 //  f.maximumNumber();
 
-//  swap without third variable
+//  ===== swap without third variable
 //  f.swapWithoutThirdVariable();

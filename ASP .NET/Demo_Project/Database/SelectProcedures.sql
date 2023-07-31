@@ -3,7 +3,7 @@
 CREATE PROCEDURE [dbo].[PR_Country_SelectAll]
 AS
 
-SELECT [dbo].[LOC_Country].[CountryName]
+SELECT [dbo].[LOC_Country].[CountryID]
 	  ,[dbo].[LOC_Country].[CountryName]
       ,[dbo].[LOC_Country].[CountryCode]
 	  ,[dbo].[LOC_Country].[Created]

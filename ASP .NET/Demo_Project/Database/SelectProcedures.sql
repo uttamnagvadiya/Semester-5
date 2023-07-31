@@ -260,7 +260,7 @@ DELETE FROM [dbo].[LOC_State]
 WHERE [dbo].[LOC_State].[StateID] = @StateID
 
 
--- 13. Create Delete Procedure to delete record for City.
+-- 15. Create Delete Procedure to delete record for City.
 CREATE PROCEDURE [dbo].[PR_City_DeleteByPK]
 	@CityID	int
 

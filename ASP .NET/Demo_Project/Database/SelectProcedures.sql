@@ -150,14 +150,12 @@ INSERT INTO [dbo].[LOC_State]
 	[StateName]
    ,[CountryID]
    ,[StateCode]
-   
 )
 VALUES
 (
 	@StateName,
 	@CountryID,
 	@StateCode
-	
 )
 
 
@@ -175,7 +173,6 @@ INSERT INTO [dbo].[LOC_City]
    ,[StateID]
    ,[CountryID]
    ,[Citycode]
-   
 )
 VALUES
 (

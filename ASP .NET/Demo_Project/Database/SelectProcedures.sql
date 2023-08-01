@@ -121,6 +121,7 @@ ORDER BY [dbo].[LOC_Country].[CountryName]
 
 
 -- 7. Create Insert Procedure to add any new record for Country
+-- [PR_Country_Insert_Record] @CountryName = 'India', @CountryCode = 'IND'
 CREATE PROCEDURE [dbo].[PR_Country_Insert_Record]
 	@CountryName	varchar(100),
 	@CountryCode	varchar(50)
@@ -128,8 +129,8 @@ CREATE PROCEDURE [dbo].[PR_Country_Insert_Record]
 AS
 INSERT INTO [dbo].[LOC_Country]
 (
-	[CountryName]
-   ,[CountryCode]
+	[dbo].[LOC_Country].[CountryName]
+   ,[dbo].[LOC_Country].[CountryCode]
 )
 VALUES
 (
@@ -147,9 +148,9 @@ CREATE PROCEDURE [dbo].[PR_State_Insert_Record]
 AS
 INSERT INTO [dbo].[LOC_State]
 (
-	[StateName]
-   ,[CountryID]
-   ,[StateCode]
+	[dbo].[LOC_State].[StateName]
+   ,[dbo].[LOC_State].[CountryID]
+   ,[dbo].[LOC_State].[StateCode]
 )
 VALUES
 (
@@ -169,10 +170,10 @@ CREATE PROCEDURE [dbo].[PR_City_Insert_Record]
 AS
 INSERT INTO [dbo].[LOC_City]
 (
-	[CityName]
-   ,[StateID]
-   ,[CountryID]
-   ,[Citycode]
+	[dbo].[LOC_City].[CityName]
+   ,[dbo].[LOC_City].[StateID]
+   ,[dbo].[LOC_City].[CountryID]
+   ,[dbo].[LOC_City].[Citycode]
 )
 VALUES
 (
@@ -195,8 +196,8 @@ CREATE PROCEDURE [dbo].[PR_Country_UpdateByPK]
 AS
 UPDATE [dbo].[LOC_Country]
 	
-	SET [CountryName] = @CountryName,
-		[CountryCode] = @CountryCode
+	SET [dbo].[LOC_Country].[CountryName] = @CountryName,
+		[dbo].[LOC_Country].[CountryCode] = @CountryCode
 
 	WHERE [dbo].[LOC_Country].[CountryID] = @CountryID
 
@@ -211,9 +212,9 @@ CREATE PROCEDURE [dbo].[PR_State_UpdateByPK]
 AS
 UPDATE [dbo].[LOC_State]
 
-	SET [StateName] = @StateName,
-		[CountryID] = @CountryID,
-		[StateCode] = @StateCode
+	SET [dbo].[LOC_State].[StateName] = @StateName,
+		[dbo].[LOC_State].[CountryID] = @CountryID,
+		[dbo].[LOC_State].[StateCode] = @StateCode
 
 	WHERE [dbo].[LOC_State].[StateID] = @StateID
 
@@ -229,10 +230,10 @@ CREATE PROCEDURE [dbo].[PR_City_UpdateByPK]
 AS
 UPDATE [dbo].[LOC_City]
 
-	SET [CityName] = @CityName,
-		[StateID] = @StateID,
-		[CountryID] = @CountryID,
-		[Citycode] = @CityCode
+	SET [dbo].[LOC_City].[CityName] = @CityName,
+		[dbo].[LOC_City].[StateID] = @StateID,
+		[dbo].[LOC_City].[CountryID] = @CountryID,
+		[dbo].[LOC_City].[Citycode] = @CityCode
 
 	WHERE [dbo].[LOC_City].[CityID] = @CityID
 	

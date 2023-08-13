@@ -1,4 +1,3 @@
-
 -- 1. Create Procedure for Select all countries
 CREATE PROCEDURE [dbo].[PR_Country_SelectAll]
 AS
@@ -242,6 +241,7 @@ UPDATE [dbo].[LOC_City]
 
 
 -- 13. Create Delete Procedure to delete record for Country.
+-- [PR_Country_DeleteByPK] @CountryID = 7
 CREATE PROCEDURE [dbo].[PR_Country_DeleteByPK]
 	@CountryID	int
 

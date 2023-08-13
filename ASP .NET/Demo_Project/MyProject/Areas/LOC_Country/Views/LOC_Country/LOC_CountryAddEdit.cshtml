@@ -1,0 +1,30 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model MyProject.Areas.LOC_Country.Models.LOC_CountryModel
+
+<div class="container w-50">
+    <form method="post" asp-area="LOC_Country" asp-controller="LOC_Country">
+        <div class="mb-3">
+            <label class="form-label">Country Name :</label>
+            <input type="text" class="form-control" id="CountryName" asp-for="CountryName" />
+            <span class="text-danger" asp-validation-for="CountryName"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Country Code :</label>
+            <input type="text" class="form-control" id="CountryCode" asp-for="CountryCode" />
+            <span class="form-text text-danger" asp-validation-for="CountryCode"></span>
+        </div>
+        <button type="submit" class="btn btn-primary" >Submit</button>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

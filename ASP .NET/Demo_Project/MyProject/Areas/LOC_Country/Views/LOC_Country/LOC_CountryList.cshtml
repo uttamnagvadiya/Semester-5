@@ -1,0 +1,56 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Country";
+    ViewBag.Header = "Countries";
+}
+<div class="container">
+    <div class="mb-3 text-end">
+        <a type="button" asp-area="LOC_Country" asp-controller="LOC_Country" asp-action="LOC_CountryAddEdit" class="btn btn-outline-primary"><i class="bi bi-plus"></i>New Country</a>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr class="table-primary">
+                <th scope="col">Country Name</th>
+                <th scope="col">Country Code</th>
+                <th scope="col">Created Date</th>
+                <th scope="col">Modified Date</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>India</td>
+                <td>IND</td>
+                <td>07 Aug, 2023</td>
+                <td>07 Aug, 2023</td>
+                <td>
+                    <a type="button" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
+                    <button type="button" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td>America</td>
+                <td>USA</td>
+                <td>07 Aug, 2023</td>
+                <td>07 Aug, 2023</td>
+                <td>
+                    <a type="button" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
+                    <button type="button" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></button>
+                </td>
+            </tr>
+            <tr>
+                <td>Sri Lanka</td>
+                <td>SL</td>
+                <td>07 Aug, 2023</td>
+                <td>07 Aug, 2023</td>
+                <td>
+                    <a type="button" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
+                    <button type="button" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -60,7 +60,7 @@ CREATE PROCEDURE [dbo].[PR_Country_SelectByPK]
 	@CountryID int
 AS
 
-SELECT [dbo].[LOC_Country].[CountryName]
+SELECT [dbo].[LOC_Country].[CountryID]
 	  ,[dbo].[LOC_Country].[CountryName]
       ,[dbo].[LOC_Country].[CountryCode]
 	  ,[dbo].[LOC_Country].[Created]
@@ -195,8 +195,9 @@ CREATE PROCEDURE [dbo].[PR_Country_UpdateByPK]
 AS
 UPDATE [dbo].[LOC_Country]
 	
-	SET [dbo].[LOC_Country].[CountryName] = @CountryName,
-		[dbo].[LOC_Country].[CountryCode] = @CountryCode
+	SET  [dbo].[LOC_Country].[CountryName] = @CountryName
+		,[dbo].[LOC_Country].[CountryCode] = @CountryCode
+		,[dbo].[LOC_Country].[Modified] = GETDATE()
 
 	WHERE [dbo].[LOC_Country].[CountryID] = @CountryID
 
@@ -211,15 +212,16 @@ CREATE PROCEDURE [dbo].[PR_State_UpdateByPK]
 AS
 UPDATE [dbo].[LOC_State]
 
-	SET [dbo].[LOC_State].[StateName] = @StateName,
-		[dbo].[LOC_State].[CountryID] = @CountryID,
-		[dbo].[LOC_State].[StateCode] = @StateCode
+	SET  [dbo].[LOC_State].[StateName] = @StateName
+		,[dbo].[LOC_State].[CountryID] = @CountryID
+		,[dbo].[LOC_State].[StateCode] = @StateCode
+		,[dbo].[LOC_State].[Modified] = GETDATE()
 
 	WHERE [dbo].[LOC_State].[StateID] = @StateID
 
 
 -- 12. Create Update Procedure to edit/modify existing record for City.
-CREATE PROCEDURE [dbo].[PR_City_UpdateByPK]
+alter PROCEDURE [dbo].[PR_City_UpdateByPK]
 	@CityID		int,
 	@CityName	varchar(100),
 	@StateID	int,
@@ -229,10 +231,11 @@ CREATE PROCEDURE [dbo].[PR_City_UpdateByPK]
 AS
 UPDATE [dbo].[LOC_City]
 
-	SET [dbo].[LOC_City].[CityName] = @CityName,
-		[dbo].[LOC_City].[StateID] = @StateID,
-		[dbo].[LOC_City].[CountryID] = @CountryID,
-		[dbo].[LOC_City].[Citycode] = @CityCode
+	SET  [dbo].[LOC_City].[CityName] = @CityName
+		,[dbo].[LOC_City].[StateID] = @StateID
+		,[dbo].[LOC_City].[CountryID] = @CountryID
+		,[dbo].[LOC_City].[Citycode] = @CityCode
+		,[dbo].[LOC_City].[Modified] = GETDATE()
 
 	WHERE [dbo].[LOC_City].[CityID] = @CityID
 	

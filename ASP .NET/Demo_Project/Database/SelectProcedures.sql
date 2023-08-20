@@ -221,7 +221,7 @@ UPDATE [dbo].[LOC_State]
 
 
 -- 12. Create Update Procedure to edit/modify existing record for City.
-alter PROCEDURE [dbo].[PR_City_UpdateByPK]
+CREATE PROCEDURE [dbo].[PR_City_UpdateByPK]
 	@CityID		int,
 	@CityName	varchar(100),
 	@StateID	int,

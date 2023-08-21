@@ -279,7 +279,8 @@ WHERE [dbo].[LOC_City].[CityID] = @CityID
 -- 26. Search Country by Country Name.
 -- PR_Country_Search @CountryName = ''
 CREATE OR ALTER PROCEDURE [dbo].[PR_Country_Search]
-	@CountryName	varchar(150) = null
+	@CountryName	varchar(150) = null,
+	@CountryCode	varchar(25) = null
 AS
 
 SELECT [dbo].[LOC_Country].[CountryID]
@@ -290,4 +291,5 @@ SELECT [dbo].[LOC_Country].[CountryID]
 
 FROM [dbo].[LOC_Country]
 WHERE [dbo].[LOC_Country].[CountryName] LIKE CONCAT('%', @CountryName, '%')
+AND [dbo].[LOC_Country].[CountryCode] LIKE CONCAT('%', @CountryCode, '%')
 ORDER BY [dbo].[LOC_Country].[CountryName]

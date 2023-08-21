@@ -139,6 +139,7 @@ namespace My_Project.Areas.LOC_Country.Controllers
             command.CommandType = CommandType.StoredProcedure;
             command.CommandText = "PR_Country_Search";
             command.Parameters.AddWithValue("@CountryName", loc_Country.CountryName);
+            command.Parameters.AddWithValue("@CountryCode", loc_Country.CountryCode);
             SqlDataReader data_reader = command.ExecuteReader();
             dt.Load(data_reader);
             connection.Close();

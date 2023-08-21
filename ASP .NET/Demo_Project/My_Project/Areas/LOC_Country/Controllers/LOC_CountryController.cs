@@ -128,5 +128,22 @@ namespace My_Project.Areas.LOC_Country.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        public IActionResult LOC_CountrySearch(LOC_CountryModel loc_Country)
+        {
+            string connectionString = this.Configuration.GetConnectionString("myConnectionString");
+            SqlConnection connection = new SqlConnection(connectionString);
+            DataTable dt = new DataTable();
+            connection.Open();
+            SqlCommand command = connection.CreateCommand();
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "PR_Country_Search";
+            command.Parameters.AddWithValue("@CountryName", loc_Country.CountryName);
+            SqlDataReader data_reader = command.ExecuteReader();
+            dt.Load(data_reader);
+            connection.Close();
+
+            return View("LOC_CountryList", dt);
+        }
     }
 }

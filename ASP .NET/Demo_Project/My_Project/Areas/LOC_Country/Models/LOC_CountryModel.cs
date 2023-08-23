@@ -15,4 +15,11 @@ namespace My_Project.Areas.LOC_Country.Models
         [DisplayName("Country Code")]
         public string CountryCode { get; set; } = string.Empty;
     }
+
+    public class LOC_CountryDropdownModel
+    {
+        public int CountryID { get; set; }
+
+        public string CountryName { get; set; }
+    }
 }

@@ -1,5 +1,5 @@
 -- 1. Create Procedure for Select all countries
-CREATE PROCEDURE [dbo].[PR_Country_SelectAll]
+CREATE OR ALTER PROCEDURE [dbo].[PR_Country_SelectAll]
 AS
 
 SELECT [dbo].[LOC_Country].[CountryID]
@@ -13,11 +13,12 @@ ORDER BY [dbo].[LOC_Country].[CountryName]
 
 
 -- 2. Create Procedure for Select all states
-CREATE PROCEDURE [dbo].[PR_State_SelectAll]
+-- PR_State_SelectAll
+CREATE OR ALTER PROCEDURE [dbo].[PR_State_SelectAll]
 AS
 
 SELECT [dbo].[LOC_State].[StateID]
-      ,[dbo].[LOC_State].[CountryID]
+      ,[dbo].[LOC_Country].[CountryName]
 	  ,[dbo].[LOC_State].[StateName]
 	  ,[dbo].[LOC_State].[StateCode]
 	  ,[dbo].[LOC_State].[Created]
@@ -31,14 +32,16 @@ ORDER BY [dbo].[LOC_Country].[CountryName]
 
 
 -- 3. Create Procedure for Select all cities
-CREATE PROCEDURE [dbo].[PR_City_SelectAll]
+CREATE OR ALTER PROCEDURE [dbo].[PR_City_SelectAll]
 AS
 
 SELECT [dbo].[LOC_City].[CityID]
 	  ,[dbo].[LOC_City].[CityName]
-	  ,[dbo].[LOC_City].[StateID]
-	  ,[dbo].[LOC_City].[CountryID]
 	  ,[dbo].[LOC_City].[Citycode]
+	  ,[dbo].[LOC_City].[StateID]
+	  ,[dbo].[LOC_State].[StateName]
+	  ,[dbo].[LOC_City].[CountryID]
+	  ,[dbo].[LOC_Country].[CountryName]
 	  ,[dbo].[LOC_City].[CreationDate]
 	  ,[dbo].[LOC_City].[Modified]
 
@@ -56,7 +59,7 @@ ORDER BY [dbo].[LOC_Country].[CountryName]
 
 
 -- 4. Create Procedure for Select Country by PK
-CREATE PROCEDURE [dbo].[PR_Country_SelectByPK]
+CREATE OR ALTER PROCEDURE [dbo].[PR_Country_SelectByPK]
 	@CountryID int
 AS
 
@@ -72,7 +75,7 @@ ORDER BY [dbo].[LOC_Country].[CountryName]
 
 
 -- 5. Create Procedure for Select State by PK
-CREATE PROCEDURE [dbo].[PR_State_SelectByPK]
+CREATE OR ALTER PROCEDURE [dbo].[PR_State_SelectByPK]
 	@StateID int
 AS
 
@@ -92,14 +95,16 @@ ORDER BY [dbo].[LOC_Country].[CountryName]
 
 
 -- 6. Create Procedure for Select City by PK
-CREATE PROCEDURE [dbo].[PR_City_SelectByPK]
+CREATE OR ALTER PROCEDURE [dbo].[PR_City_SelectByPK]
 	@CityID int
 AS
 
 SELECT [dbo].[LOC_City].[CityID]
 	  ,[dbo].[LOC_City].[CityName]
 	  ,[dbo].[LOC_City].[StateID]
+	  ,[dbo].[LOC_State].[StateName]
 	  ,[dbo].[LOC_City].[CountryID]
+	  ,[dbo].[LOC_Country].[CountryName]
 	  ,[dbo].[LOC_City].[Citycode]
 	  ,[dbo].[LOC_City].[CreationDate]
 	  ,[dbo].[LOC_City].[Modified]
@@ -121,7 +126,7 @@ ORDER BY [dbo].[LOC_Country].[CountryName]
 
 -- 7. Create Insert Procedure to add any new record for Country
 -- [PR_Country_Insert_Record] @CountryName = 'India', @CountryCode = 'IND'
-CREATE PROCEDURE [dbo].[PR_Country_Insert_Record]
+CREATE OR ALTER PROCEDURE [dbo].[PR_Country_Insert_Record]
 	@CountryName	varchar(100),
 	@CountryCode	varchar(50)
 
@@ -139,7 +144,8 @@ VALUES
 
 
 -- 8. Create Insert Procedure to add new record for State.
-CREATE PROCEDURE [dbo].[PR_State_Insert_Record]
+-- PR_State_Insert_Record @StateName = 'Maharashtra', @StateCode = 'MH', @CountryID = 15
+CREATE OR ALTER PROCEDURE [dbo].[PR_State_Insert_Record]
 	@StateName	varchar(100),
 	@CountryID	int,
 	@StateCode	varchar(50)
@@ -160,7 +166,8 @@ VALUES
 
 
 -- 9. Create Insert Procedure to add new record for City.
-CREATE PROCEDURE [dbo].[PR_City_Insert_Record]
+-- PR_City_Insert_Record @CityName = 'Jamnagar', @CityCode = 'JM', @StateID = 1, @CountryID = 15
+CREATE OR ALTER PROCEDURE [dbo].[PR_City_Insert_Record]
 	@CityName	varchar(100),
 	@StateID	int,
 	@CountryID	int,
@@ -187,7 +194,7 @@ VALUES
 
 
 -- 10. Create Update Procedure to edit/modeify existing record for Country.
-CREATE PROCEDURE [dbo].[PR_Country_UpdateByPK]
+CREATE OR ALTER PROCEDURE [dbo].[PR_Country_UpdateByPK]
 	@CountryID		int,
 	@CountryName	varchar(100),
 	@CountryCode	varchar(50)
@@ -203,7 +210,7 @@ UPDATE [dbo].[LOC_Country]
 
 
 -- 11. Create Update Procedure to edit/modify existing record for State.
-CREATE PROCEDURE [dbo].[PR_State_UpdateByPK]
+CREATE OR ALTER PROCEDURE [dbo].[PR_State_UpdateByPK]
 	@StateID	int,
 	@StateName	varchar(100),
 	@CountryID	int,
@@ -221,7 +228,7 @@ UPDATE [dbo].[LOC_State]
 
 
 -- 12. Create Update Procedure to edit/modify existing record for City.
-CREATE PROCEDURE [dbo].[PR_City_UpdateByPK]
+CREATE OR ALTER PROCEDURE [dbo].[PR_City_UpdateByPK]
 	@CityID		int,
 	@CityName	varchar(100),
 	@StateID	int,
@@ -245,7 +252,7 @@ UPDATE [dbo].[LOC_City]
 
 -- 13. Create Delete Procedure to delete record for Country.
 -- [PR_Country_DeleteByPK] @CountryID = 7
-CREATE PROCEDURE [dbo].[PR_Country_DeleteByPK]
+CREATE OR ALTER PROCEDURE [dbo].[PR_Country_DeleteByPK]
 	@CountryID	int
 
 AS
@@ -255,7 +262,7 @@ WHERE [dbo].[LOC_Country].[CountryID] = @CountryID
 
 
 -- 14. Create Delete Procedure to delete record for State.
-CREATE PROCEDURE [dbo].[PR_State_DeleteByPK]
+CREATE OR ALTER PROCEDURE [dbo].[PR_State_DeleteByPK]
 	@StateID	int
 
 AS
@@ -265,7 +272,7 @@ WHERE [dbo].[LOC_State].[StateID] = @StateID
 
 
 -- 15. Create Delete Procedure to delete record for City.
-CREATE PROCEDURE [dbo].[PR_City_DeleteByPK]
+CREATE OR ALTER PROCEDURE [dbo].[PR_City_DeleteByPK]
 	@CityID	int
 
 AS
@@ -276,7 +283,7 @@ WHERE [dbo].[LOC_City].[CityID] = @CityID
 
 --===========================================================================================================
 
--- 26. Search Country by Country Name.
+-- 26. Search Country by Country Name or Country Code.
 -- PR_Country_Search @CountryName = ''
 CREATE OR ALTER PROCEDURE [dbo].[PR_Country_Search]
 	@CountryName	varchar(150) = null,
@@ -293,3 +300,31 @@ FROM [dbo].[LOC_Country]
 WHERE [dbo].[LOC_Country].[CountryName] LIKE CONCAT('%', @CountryName, '%')
 AND [dbo].[LOC_Country].[CountryCode] LIKE CONCAT('%', @CountryCode, '%')
 ORDER BY [dbo].[LOC_Country].[CountryName]
+.
+
+
+-- 27. Search State by State Name or State Code.
+
+
+
+-- 28. Search City by City Name or City Code.
+
+
+
+-- 29. Country Name for Dropdown Combobox.
+CREATE OR ALTER PROCEDURE [dbo].[PR_Country_SelectForDropdown]
+AS
+SELECT  [dbo].[LOC_Country].[CountryID]
+	   ,[dbo].[LOC_Country].[CountryName]
+FROM [dbo].[LOC_Country]
+ORDER BY [dbo].[LOC_Country].[CountryName]
+
+
+
+-- 30. State Name for Dropdown Combobox.
+CREATE OR ALTER PROCEDURE [dbo].[PR_State_SelectForDropdown]
+AS
+SELECT  [dbo].[LOC_State].[StateID]
+	   ,[dbo].[LOC_State].[StateName]	
+FROM [dbo].[LOC_State]
+ORDER BY [dbo].[LOC_State].[StateName]

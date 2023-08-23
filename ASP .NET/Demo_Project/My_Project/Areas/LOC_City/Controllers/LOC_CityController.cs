@@ -1,24 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using My_Project.Areas.LOC_City.Models;
 using My_Project.Areas.LOC_Country.Models;
 using My_Project.Areas.LOC_State.Models;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace My_Project.Areas.LOC_State.Controllers
+namespace My_Project.Areas.LOC_City.Controllers
 {
-    [Area("LOC_State")]
-    public class LOC_StateController : Controller
+    [Area("LOC_City")]
+    public class LOC_CityController : Controller
     {
         #region Configuration...
         private IConfiguration Configuration;
-
-        public LOC_StateController(IConfiguration configuration)
+        public LOC_CityController(IConfiguration configuration)
         {
             Configuration = configuration;
         }
         #endregion
 
-        #region State List...
+        #region City List...
         public IActionResult Index()
         {
             string connectionString = this.Configuration.GetConnectionString("myConnectionString");
@@ -27,17 +27,17 @@ namespace My_Project.Areas.LOC_State.Controllers
             connection.Open();
             SqlCommand command = connection.CreateCommand();
             command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = "PR_State_SelectAll";
+            command.CommandText = "PR_City_SelectAll";
             SqlDataReader data_reader = command.ExecuteReader();
             dataTable.Load(data_reader);
             connection.Close();
 
-            return View("LOC_StateList", dataTable);
+            return View("LOC_CityList", dataTable);
         }
         #endregion
 
-        #region State Delete...
-        public IActionResult LOC_StateDelete(int StateID)
+        #region City Delete...
+        public IActionResult LOC_CityDelete(int CityID)
         {
             try
             {
@@ -46,8 +46,8 @@ namespace My_Project.Areas.LOC_State.Controllers
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
-                command.CommandText = "PR_State_DeleteByPK";
-                command.Parameters.AddWithValue("@StateID", StateID);
+                command.CommandText = "PR_City_DeleteByPK";
+                command.Parameters.AddWithValue("@CityID", CityID);
                 command.ExecuteNonQuery();
                 connection.Close();
 
@@ -61,23 +61,27 @@ namespace My_Project.Areas.LOC_State.Controllers
         }
         #endregion
 
-        #region State Add or Edit...
-        public IActionResult LOC_StateAddEdit(int? StateID)
+        #region City Add or Edit...
+        public IActionResult LOC_CityAddEdit(int? CityID)
         {
-            #region Country List for Dropdown...
+            #region Country & State List for Dropdowns...
             string connectionString = this.Configuration.GetConnectionString("myConnectionString");
-            DataTable dataTable = new DataTable();
-            SqlConnection connection = new SqlConnection( connectionString);
+            DataTable countryDataTable = new DataTable();
+            DataTable stateDataTable = new DataTable();
+            SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             SqlCommand command = connection.CreateCommand();
             command.CommandType = CommandType.StoredProcedure;
             command.CommandText = "PR_Country_SelectForDropdown";
-            SqlDataReader data_reader = command.ExecuteReader();
-            dataTable.Load(data_reader);
+            SqlDataReader data_reader1 = command.ExecuteReader();
+            countryDataTable.Load(data_reader1);
+            command.CommandText = "PR_State_SelectForDropdown";
+            SqlDataReader data_reader2 = command.ExecuteReader();
+            stateDataTable.Load(data_reader2);
             connection.Close();
 
             List<LOC_CountryDropdownModel> countryDropdownModelsList = new List<LOC_CountryDropdownModel>();
-            foreach (DataRow data in dataTable.Rows)
+            foreach (DataRow data in countryDataTable.Rows)
             {
                 LOC_CountryDropdownModel countryModel = new LOC_CountryDropdownModel
                 {
@@ -87,10 +91,22 @@ namespace My_Project.Areas.LOC_State.Controllers
                 countryDropdownModelsList.Add(countryModel);
             }
 
+            List<LOC_StateDropdownModel> stateDropdownModelsList = new List<LOC_StateDropdownModel>();
+            foreach (DataRow data in stateDataTable.Rows)
+            {
+                LOC_StateDropdownModel stateModel = new LOC_StateDropdownModel
+                {
+                    StateID = Convert.ToInt32(data["StateID"]),
+                    StateName = data["StateName"].ToString(),
+                };
+                stateDropdownModelsList.Add(stateModel);
+            }
+
             ViewBag.CountryDropdownList = countryDropdownModelsList;
+            ViewBag.StateDropdownList = stateDropdownModelsList;
             #endregion
 
-            if (StateID != null)
+            if (CityID != null)
             {
                 try
                 {
@@ -100,18 +116,21 @@ namespace My_Project.Areas.LOC_State.Controllers
                     sql_connection.Open();
                     SqlCommand sql_command = sql_connection.CreateCommand();
                     sql_command.CommandType = CommandType.StoredProcedure;
-                    sql_command.CommandText = "PR_State_SelectByPK";
-                    sql_command.Parameters.AddWithValue("@StateID", StateID);
+                    sql_command.CommandText = "PR_City_SelectByPK";
+                    sql_command.Parameters.AddWithValue("@CityID", CityID);
                     SqlDataReader sql_data_reader = sql_command.ExecuteReader();
                     data_table.Load(sql_data_reader);
                     sql_connection.Close();
 
-                    LOC_StateModel model = new LOC_StateModel
+                    LOC_CityModel model = new LOC_CityModel
                     {
+                        CityID = Convert.ToInt32(data_table.Rows[0]["CityID"]),
                         StateID = Convert.ToInt32(data_table.Rows[0]["StateID"]),
                         CountryID = Convert.ToInt32(data_table.Rows[0]["CountryID"]),
+                        CityName = data_table.Rows[0]["CityName"].ToString(),
+                        CityCode = data_table.Rows[0]["CityCode"].ToString(),
                         StateName = data_table.Rows[0]["StateName"].ToString(),
-                        StateCode = data_table.Rows[0]["StateCode"].ToString(),
+                        CountryName = data_table.Rows[0]["CountryName"].ToString(),
                     };
 
                     return View(model);
@@ -123,9 +142,9 @@ namespace My_Project.Areas.LOC_State.Controllers
             }
             else
             {
-                LOC_StateModel model = new LOC_StateModel
+                LOC_CityModel model = new LOC_CityModel
                 {
-                    StateID = StateID,
+                    CityID = CityID
                 };
 
                 return View(model);
@@ -134,7 +153,7 @@ namespace My_Project.Areas.LOC_State.Controllers
         #endregion
 
         #region Save Record...
-        public IActionResult Save(LOC_StateModel stateModel)
+        public IActionResult Save(LOC_CityModel cityModel)
         {
             try
             {
@@ -143,18 +162,19 @@ namespace My_Project.Areas.LOC_State.Controllers
                 connection.Open();
                 SqlCommand command = connection.CreateCommand();
                 command.CommandType = CommandType.StoredProcedure;
-                if (stateModel.StateID == null)
+                if (cityModel.CityID == null)
                 {
-                    command.CommandText = "PR_State_Insert_Record";
+                    command.CommandText = "PR_City_Insert_Record";
                 }
                 else
                 {
-                    command.CommandText = "PR_State_UpdateByPK";
-                    command.Parameters.AddWithValue("@StateID", stateModel.StateID); 
+                    command.CommandText = "PR_City_UpdateByPK";
+                    command.Parameters.AddWithValue("@CityID", cityModel.CityID);
                 }
-                command.Parameters.AddWithValue("@CountryID", stateModel.CountryID);
-                command.Parameters.AddWithValue("@StateName", stateModel.StateName);
-                command.Parameters.AddWithValue("@StateCode", stateModel.StateCode);
+                command.Parameters.AddWithValue("@StateID", cityModel.StateID);
+                command.Parameters.AddWithValue("@CountryID", cityModel.CountryID);
+                command.Parameters.AddWithValue("@CityName", cityModel.CityName);
+                command.Parameters.AddWithValue("@CityCode", cityModel.CityCode);
                 command.ExecuteNonQuery();
                 connection.Close();
 

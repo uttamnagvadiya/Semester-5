@@ -4,7 +4,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+ 
 @model System.Data.DataTable;
 
 <style>
@@ -13,22 +13,22 @@
         height: 71vh;
     }
 
-    .table-data thead tr {
-        position: sticky;
-        top: 0;
-    }
+        .table-data thead tr {
+            position: sticky;
+            top: 0;
+        }
 </style>
 
 <div class="container">
     <nav class="navbar bg-body-tertiary mb-2">
         <div class="container-fluid">
             <form class="d-flex w-50" role="search" asp-area="" asp-controller="" asp-action="">
-                <input class="form-control me-2" type="text" placeholder="Search by state name" aria-label="Search" name="">
-                <input class="form-control me-2" type="text" placeholder="Search by state code" aria-label="Search" name="">
+                <input class="form-control me-2" type="text" placeholder="Search by city name" aria-label="Search" name="">
+                <input class="form-control me-2" type="text" placeholder="Search by city code" aria-label="Search" name="">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
-            <form method="post" asp-area="LOC_State" asp-controller="LOC_State" asp-action="LOC_StateAddEdit">
-                <button type="submit" class="btn btn-outline-primary"><i class="bi bi-plus"></i>New State</button>
+            <form method="post" asp-area="LOC_City" asp-controller="LOC_City" asp-action="LOC_CityAddEdit">
+                <button type="submit" class="btn btn-outline-primary"><i class="bi bi-plus"></i>New City</button>
             </form>
         </div>
     </nav>
@@ -39,7 +39,8 @@
                 <tr class="table-primary">
                     <th scope="col">Country Name</th>
                     <th scope="col">State Name</th>
-                    <th scope="col">State Code</th>
+                    <th scope="col">City Name</th>
+                    <th scope="col">City Code</th>
                     <th scope="col">Created Date</th>
                     <th scope="col">Modified Date</th>
                     <th scope="col" colspan="3" class="text-center">Action</th>
@@ -51,16 +52,17 @@
                     <tr>
                         <td>@data["CountryName"]</td>
                         <td>@data["StateName"]</td>
-                        <td>@data["StateCode"]</td>
-                        <td>@Convert.ToDateTime(data["Created"]).ToString("dd MMM, yyyy")</td>
+                        <td>@data["CityName"]</td>
+                        <td>@data["CityCode"]</td>
+                        <td>@Convert.ToDateTime(data["CreationDate"]).ToString("dd MMM, yyyy")</td>
                         <td>@data["Modified"]</td>
                         <td class="text-end">
-                            <form method="post" asp-area="LOC_State" asp-controller="LOC_State" asp-action="LOC_StateAddEdit" asp-route-StateID="@data["StateID"]">
+                            <form method="post" asp-area="LOC_City" asp-controller="LOC_City" asp-action="LOC_CityAddEdit" asp-route-CityID="@data["CityID"]">
                                 <button type="submit" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></button>
                             </form>
                         </td>
                         <td>
-                            <form method="post" asp-area="LOC_State" asp-controller="LOC_State" asp-action="LOC_StateDelete" asp-route-StateID="@data["StateID"]">
+                            <form method="post" asp-area="LOC_City" asp-controller="LOC_City" asp-action="LOC_CityDelete" asp-route-CityID="@data["CityID"]">
                                 <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></button>
                             </form>
                         </td>

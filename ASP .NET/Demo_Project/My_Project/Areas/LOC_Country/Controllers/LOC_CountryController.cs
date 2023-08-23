@@ -8,12 +8,15 @@ namespace My_Project.Areas.LOC_Country.Controllers
     [Area("LOC_Country")]
     public class LOC_CountryController : Controller
     {
+        #region Configuration...
         private IConfiguration Configuration;
         public LOC_CountryController(IConfiguration _configuration)
         {
             Configuration = _configuration;
         }
+        #endregion
 
+        #region Country List...
         public IActionResult Index()
         {
             // SQL Connection
@@ -30,12 +33,13 @@ namespace My_Project.Areas.LOC_Country.Controllers
 
             return View("LOC_CountryList", dt);
         }
+        #endregion
 
+        #region Country Add or Edit...
         public IActionResult LOC_CountryAddEdit(int? CountryID)
         {
             if (CountryID != null)
             {
-                ViewBag.CountryID = CountryID;
                 try
                 {
                     string connectionString = this.Configuration.GetConnectionString("myConnectionString");
@@ -74,6 +78,9 @@ namespace My_Project.Areas.LOC_Country.Controllers
                 return View(model);
             }
         }
+        #endregion
+
+        #region Save Record...
         public IActionResult Save(LOC_CountryModel countryModel)
         {
             try
@@ -105,7 +112,9 @@ namespace My_Project.Areas.LOC_Country.Controllers
                 return RedirectToAction("Index");
             }
         }
+        #endregion
 
+        #region Country Delete...
         public IActionResult LOC_CountryDelete(int CountryID)
         {
             try
@@ -128,7 +137,9 @@ namespace My_Project.Areas.LOC_Country.Controllers
                 return RedirectToAction("Index");
             }
         }
+        #endregion
 
+        #region Search Country...
         public IActionResult LOC_CountrySearch(LOC_CountryModel loc_Country)
         {
             string connectionString = this.Configuration.GetConnectionString("myConnectionString");
@@ -146,5 +157,6 @@ namespace My_Project.Areas.LOC_Country.Controllers
 
             return View("LOC_CountryList", dt);
         }
+        #endregion
     }
 }

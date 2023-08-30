@@ -4,6 +4,8 @@ using My_Project.Areas.LOC_Country.Models;
 using My_Project.Areas.LOC_State.Models;
 using System.Data;
 using System.Data.SqlClient;
+using My_Project.Areas.LOC_Country.Controllers;
+
 
 namespace My_Project.Areas.LOC_City.Controllers
 {
@@ -61,6 +63,10 @@ namespace My_Project.Areas.LOC_City.Controllers
         }
         #endregion
 
+        public IActionResult DropDown()
+        {
+           return RedirectToRoute(new { Area="LOC_Country", controller = "LOC_Country", action = "Index" });
+        }
         #region City Add or Edit...
         public IActionResult LOC_CityAddEdit(int? CityID)
         {
@@ -184,6 +190,26 @@ namespace My_Project.Areas.LOC_City.Controllers
             {
                 return RedirectToAction("Index");
             }
+        }
+        #endregion
+
+        #region Search City...
+        public IActionResult LOC_CitySearch(LOC_CityModel cityModel)
+        {
+            string connectionString = this.Configuration.GetConnectionString("myConnectionString");
+            SqlConnection connection = new SqlConnection(connectionString);
+            DataTable dt = new DataTable();
+            connection.Open();
+            SqlCommand command = connection.CreateCommand();
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = "PR_City_Search";
+            command.Parameters.AddWithValue("@CityName", cityModel.CityName);
+            command.Parameters.AddWithValue("@CityCode", cityModel.CityCode);
+            SqlDataReader data_reader = command.ExecuteReader();
+            dt.Load(data_reader);
+            connection.Close();
+
+            return View("LOC_CityList", dt);
         }
         #endregion
     }

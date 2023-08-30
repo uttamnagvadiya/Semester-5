@@ -304,11 +304,57 @@ ORDER BY [dbo].[LOC_Country].[CountryName]
 
 
 -- 27. Search State by State Name or State Code.
+CREATE OR ALTER PROCEDURE [dbo].[PR_State_Search]
+	@StateName	varchar(150) = null,
+	@StateCode	varchar(25) = null
+AS
+
+SELECT [dbo].[LOC_State].[StateID]
+      ,[dbo].[LOC_Country].[CountryName]
+	  ,[dbo].[LOC_State].[StateName]
+	  ,[dbo].[LOC_State].[StateCode]
+	  ,[dbo].[LOC_State].[Created]
+	  ,[dbo].[LOC_State].[Modified]
+
+FROM [dbo].[LOC_State]
+INNER JOIN [dbo].[LOC_Country]
+ON [dbo].[LOC_Country].[CountryID] = [dbo].[LOC_State].[CountryID]
+WHERE [dbo].[LOC_State].[StateName] LIKE CONCAT('%', @StateName, '%')
+AND [dbo].[LOC_State].[StateCode] LIKE CONCAT('%', @StateCode, '%')
+ORDER BY [dbo].[LOC_Country].[CountryName]
+        ,[dbo].[LOC_State].[StateName]
 
 
 
 -- 28. Search City by City Name or City Code.
+CREATE OR ALTER PROCEDURE [dbo].[PR_City_Search]
+	@CityName	varchar(150) = null,
+	@CityCode	varchar(25) = null
+AS
 
+SELECT [dbo].[LOC_City].[CityID]
+	  ,[dbo].[LOC_City].[CityName]
+	  ,[dbo].[LOC_City].[Citycode]
+	  ,[dbo].[LOC_City].[StateID]
+	  ,[dbo].[LOC_State].[StateName]
+	  ,[dbo].[LOC_City].[CountryID]
+	  ,[dbo].[LOC_Country].[CountryName]
+	  ,[dbo].[LOC_City].[CreationDate]
+	  ,[dbo].[LOC_City].[Modified]
+
+FROM [dbo].[LOC_City]
+INNER JOIN [dbo].[LOC_State]
+ON [dbo].[LOC_State].[StateID] = [dbo].[LOC_City].[StateID]
+INNER JOIN [dbo].[LOC_Country] 
+ON [dbo].[LOC_Country].[CountryID] = [dbo].[LOC_State].[CountryID]
+WHERE [dbo].[LOC_City].[CityName] LIKE CONCAT('%', @CityName, '%')
+AND [dbo].[LOC_City].[Citycode] LIKE CONCAT('%', @CityCode, '%')
+ORDER BY [dbo].[LOC_Country].[CountryName]
+        ,[dbo].[LOC_State].[StateName]
+		,[dbo].[LOC_City].[CityName]
+
+
+--===========================================================================================================
 
 
 -- 29. Country Name for Dropdown Combobox.

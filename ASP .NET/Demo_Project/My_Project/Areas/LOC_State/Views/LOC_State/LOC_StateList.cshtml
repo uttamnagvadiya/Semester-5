@@ -22,9 +22,9 @@
 <div class="container">
     <nav class="navbar bg-body-tertiary mb-2">
         <div class="container-fluid">
-            <form class="d-flex w-50" role="search" asp-area="" asp-controller="" asp-action="">
-                <input class="form-control me-2" type="text" placeholder="Search by state name" aria-label="Search" name="">
-                <input class="form-control me-2" type="text" placeholder="Search by state code" aria-label="Search" name="">
+            <form class="d-flex w-50" role="search" asp-area="LOC_State" asp-controller="LOC_State" asp-action="LOC_StateSearch">
+                <input class="form-control me-2" type="text" placeholder="Search by state name" aria-label="Search" name="StateName">
+                <input class="form-control me-2" type="text" placeholder="Search by state code" aria-label="Search" name="StateCode">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
             <form method="post" asp-area="LOC_State" asp-controller="LOC_State" asp-action="LOC_StateAddEdit">

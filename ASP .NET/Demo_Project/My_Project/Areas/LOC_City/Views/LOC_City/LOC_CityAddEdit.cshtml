@@ -12,12 +12,12 @@
         @*<input type="hidden" asp-for="CountryID" />*@
         @Html.HiddenFor(x => x.CityID)
         <div class="my-4">
-            <select class="form-select" aria-label="Select Country" asp-for="CountryID" asp-items="@(new SelectList(ViewBag.CountryDropdownList, "CountryID", "CountryName"))">
+            <select class="form-select" id="CountryID" onchange="stateChange()" aria-label="Select Country" asp-for="CountryID" asp-items="@(new SelectList(ViewBag.CountryDropdownList, "CountryID", "CountryName"))">
                 <option selected>Select Country</option>
             </select>
         </div>
         <div class="my-4">
-            <select class="form-select" aria-label="Select State" asp-for="StateID" asp-items="@(new SelectList(ViewBag.StateDropdownList, "StateID", "StateName"))">
+            <select class="form-select" id="StateID" aria-label="Select State" asp-for="StateID" asp-items="@(new SelectList(ViewBag.StateDropdownList, "StateID", "StateName"))">
                 <option selected>Select State</option>
             </select>
         </div>
@@ -31,11 +31,43 @@
             <input type="text" class="form-control" id="CityCode" name="CityCode" asp-for="CityCode" />
             <span class="form-text text-danger" asp-validation-for="CityCode"></span>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" >Submit</button>
     </form>
 </div>
 
 @section Scripts{
+    <script>
+        function stateChange(){
+            let countryID = $("#CountryID").val();
+            //console.log(countryID);
+
+            if (countryID !== null){
+                $("#StateID").empty();
+                $("#StateID").append($("<option></option>").val("").html("Select State"));
+                $.ajax(
+                    {
+                        type : "POST",
+                        contentType : "application/json; charset=utf-8",
+                        url : "@Url.Action("", "LOC_City")" + "?&CountryID=" + countryID,
+                        data : {},
+                        dataType : "json",
+                        success : function (result){
+                            $.each(result, 
+                                function (key, value){
+                                    $("#StateID").append($("<option></option>").val(value.StateID).html(value.StateName));
+                                }
+                            );
+                        }
+                    }
+                );
+                
+            }
+            else{
+                $("#StateID").empty();
+                $("#StateID").append($("<option></option>").val("").html("Select State"));
+            }
+        }
+    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

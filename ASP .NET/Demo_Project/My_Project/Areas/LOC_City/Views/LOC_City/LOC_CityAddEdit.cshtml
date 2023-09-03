@@ -39,33 +39,33 @@
     <script>
         function stateChange(){
             let countryID = $("#CountryID").val();
-            //console.log(countryID);
+            console.log(countryID);
 
-            if (countryID !== null){
-                $("#StateID").empty();
-                $("#StateID").append($("<option></option>").val("").html("Select State"));
-                $.ajax(
-                    {
-                        type : "POST",
-                        contentType : "application/json; charset=utf-8",
-                        url : "@Url.Action("", "LOC_City")" + "?&CountryID=" + countryID,
-                        data : {},
-                        dataType : "json",
-                        success : function (result){
-                            $.each(result, 
-                                function (key, value){
-                                    $("#StateID").append($("<option></option>").val(value.StateID).html(value.StateName));
-                                }
-                            );
-                        }
-                    }
-                );
+            //if (countryID !== null){
+            //    $("#StateID").empty();
+            //    $("#StateID").append($("<option></option>").val("").html("Select State"));
+            //    $.ajax(
+            //        {
+            //            type : "POST",
+            //            contentType : "application/json; charset=utf-8",
+            //            url : "@Url.Action("", "LOC_City")" + "?&CountryID=" + countryID,
+            //            data : {},
+            //            dataType : "json",
+            //            success : function (result){
+            //                $.each(result, 
+            //                    function (key, value){
+            //                        $("#StateID").append($("<option></option>").val(value.StateID).html(value.StateName));
+            //                    }
+            //                );
+            //            }
+            //        }
+            //    );
                 
-            }
-            else{
-                $("#StateID").empty();
-                $("#StateID").append($("<option></option>").val("").html("Select State"));
-            }
+            //}
+            //else{
+            //    $("#StateID").empty();
+            //    $("#StateID").append($("<option></option>").val("").html("Select State"));
+            //}
         }
     </script>
     @{

@@ -90,7 +90,7 @@ GO
 SET ANSI_PADDING ON
 GO
 CREATE TABLE [dbo].[MST_Student](
-	[StudentID] [int] NOT NULL,
+	[StudentID] [int] IDENTITY(1,1) NOT NULL,
 	[BranchID] [int] NOT NULL,
 	[CityID] [int] NOT NULL,
 	[StudentName] [varchar](100) NOT NULL,

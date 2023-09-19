@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model My_Project.Areas.MST_Branch.Models.MST_BranchModel
+
+<div class="container w-50">
+    <form method="post" asp-area="MST_Branch" asp-controller="MST_Branch" asp-action="Save">
+        @Html.HiddenFor(x => x.BranchID)
+        <div class="mb-3">
+            <label class="form-label"><span class="text-danger fw-bold">*</span>Branch Name :</label>
+            <input type="text" class="form-control" id="BranchName" name="BranchName" asp-for="BranchName" />
+            <span class="form-text text-danger" asp-validation-for="BranchName"></span>
+        </div>
+        <div class="mb-3">
+            <label class="form-label"><span class="text-danger fw-bold">*</span>Branch Code :</label>
+            <input type="text" class="form-control" id="BranchCode" name="BranchCode" asp-for="BranchCode" />
+            <span class="form-text text-danger" asp-validation-for="BranchCode"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+@section Scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

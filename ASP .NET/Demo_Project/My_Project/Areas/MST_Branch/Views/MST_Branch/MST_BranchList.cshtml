@@ -1,0 +1,70 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model System.Data.DataTable;
+
+<style>
+    .table-data {
+        overflow-y: auto;
+        height: 71vh;
+    }
+
+        .table-data thead tr {
+            position: sticky;
+            top: 0;
+        }
+</style>
+
+<div class="container">
+    <nav class="navbar bg-body-tertiary mb-2">
+        <div class="container-fluid">
+            <form class="d-flex w-50" role="search" asp-area="MST_Branch" asp-controller="MST_Branch" asp-action="MST_BranchSearch">
+                <input class="form-control me-2" type="text" placeholder="Search by branch name" aria-label="Search" name="BranchName">
+                <input class="form-control me-2" type="text" placeholder="Search by branch code" aria-label="Search" name="BranchCode">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <form method="post" asp-area="MST_Branch" asp-controller="MST_Branch" asp-action="MST_BranchAddEdit">
+                <button type="submit" class="btn btn-outline-primary"><i class="bi bi-plus"></i>New Branch</button>
+            </form>
+        </div>
+    </nav>
+
+    <div class="table-data">
+        <table class="table table-hover">
+            <thead>
+                <tr class="table-primary">
+                    <th scope="col">Branch Name</th>
+                    <th scope="col">Branch Code</th>
+                    <th scope="col">Created Date</th>
+                    <th scope="col">Modified Date</th>
+                    <th scope="col" colspan="2" class="text-center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow data in Model.Rows)
+                {
+                    <tr>
+                        <td>@data["BranchName"]</td>
+                        <td>@data["BranchCode"]</td>
+                        <td>@Convert.ToDateTime(data["Created"]).ToString("dd MMM, yyyy")</td>
+                        <td>@data["Modified"]</td>
+                        <td class="text-end">
+                            <form method="post" asp-area="MST_Branch" asp-controller="MST_Branch" asp-action="MST_BranchAddEdit" asp-route-BranchID="@data["BranchID"]">
+                                <button type="submit" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="post" asp-area="MST_Branch" asp-controller="MST_Branch" asp-action="MST_BranchDelete" asp-route-BranchID="@data["BranchID"]">
+                                <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

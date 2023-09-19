@@ -65,6 +65,7 @@ namespace My_Project.Areas.LOC_Country.Controllers
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine($"Error Message : {ex.Message}");
                     return View();
                 }
             }
@@ -109,6 +110,7 @@ namespace My_Project.Areas.LOC_Country.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error Message : {ex.Message}");
                 return RedirectToAction("Index");
             }
         }

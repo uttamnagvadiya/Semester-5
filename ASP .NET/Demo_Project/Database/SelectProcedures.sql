@@ -194,10 +194,12 @@ ORDER BY [dbo].[LOC_Country].[CountryName]
 
 -- 7. State Name for Dropdown Combobox.
 CREATE OR ALTER PROCEDURE [dbo].[PR_State_SelectForDropdown]
+	@CountryID		int
 AS
 SELECT  [dbo].[LOC_State].[StateID]
 	   ,[dbo].[LOC_State].[StateName]	
 FROM [dbo].[LOC_State]
+WHERE [dbo].[LOC_State].[CountryID] = @CountryID
 ORDER BY [dbo].[LOC_State].[StateName]
 
 
@@ -326,6 +328,16 @@ ORDER BY [dbo].[LOC_Country].[CountryName]
 		,[dbo].[LOC_City].[CityName]
 
 
+-- 7. City Name for Dropdown Combobox.
+CREATE OR ALTER PROCEDURE [dbo].[PR_City_SelectForDropdown]
+	@StateID		int = null
+AS
+SELECT	[dbo].[LOC_City].[CityID]
+	   ,[dbo].[LOC_City].[CityName]
+FROM [dbo].[LOC_City]
+WHERE [dbo].[LOC_City].[StateID] = @StateID
+
+
 
 
 -->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MST_Branch <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -346,7 +358,8 @@ ORDER BY [dbo].[MST_Branch].[BranchName]
 CREATE OR ALTER PROCEDURE [dbo].[PR_Branch_SelectByPK]
 	@BranchID	int
 AS
-SELECT  [dbo].[MST_Branch].[BranchName]
+SELECT  [dbo].[MST_Branch].[BranchID]
+	   ,[dbo].[MST_Branch].[BranchName]
 	   ,[dbo].[MST_Branch].[BranchCode]
 	   ,[dbo].[MST_Branch].[Created]
 	   ,[dbo].[MST_Branch].[Modified]
@@ -393,6 +406,22 @@ DELETE FROM [dbo].[MST_Branch]
 WHERE [dbo].[MST_Branch].[BranchID] = @BranchID
 
 
+-- 6. Search Branch by Branch Name or Branch Code.
+CREATE OR ALTER PROCEDURE [dbo].[PR_Branch_Search]
+	@BranchName	varchar(100) = null,
+	@BranchCode varchar(100) = null
+AS
+SELECT	[dbo].[MST_Branch].[BranchID]
+	   ,[dbo].[MST_Branch].[BranchName]
+	   ,[dbo].[MST_Branch].[BranchCode]
+	   ,[dbo].[MST_Branch].[Created]
+	   ,[dbo].[MST_Branch].[Modified]
+FROM [dbo].[MST_Branch]
+WHERE [dbo].[MST_Branch].[BranchName] LIKE CONCAT('%', @BranchName, '%')
+AND [dbo].[MST_Branch].[BranchCode] LIKE CONCAT('%', @BranchCode, '%')
+ORDER BY [dbo].[MST_Branch].[BranchName]
+
+
 
 
 
@@ -407,17 +436,12 @@ SELECT  [dbo].[MST_Student].[StudentID]
 	   ,[dbo].[MST_Student].[MobileNoStudent]
 	   ,[dbo].[MST_Student].[BranchID]
 	   ,[dbo].[MST_Branch].[BranchName]
-	   ,[dbo].[MST_Branch].[BranchCode]
 	   ,[dbo].[MST_Student].[CityID]
-	   ,[dbo].[LOC_City].[CityName]
-	   ,[dbo].[LOC_City].[Citycode]
 	   ,[dbo].[MST_Student].[Created]
 	   ,[dbo].[MST_Student].[Modified]
 FROM [dbo].[MST_Student]
 INNER JOIN [dbo].[MST_Branch]
 ON [dbo].[MST_Branch].[BranchID] = [dbo].[MST_Student].[BranchID]
-INNER JOIN [dbo].[LOC_City]
-ON [dbo].[LOC_City].[CityID] = [dbo].[MST_Student].[CityID]
 ORDER BY [dbo].[MST_Student].[StudentName]
 
 
@@ -446,6 +470,7 @@ ORDER BY [dbo].[MST_Student].[StudentName]
 
 
 -- 3. Create Insert Procedure to add new record for Student.
+-- PR_Student_Insert_Record @StudentName="Uttam Nagvadiya", @Email="uttam123@gmail.com", @MobileNoStudent="1234567890", @BranchID=4, @CityID=1
 CREATE OR ALTER PROCEDURE [dbo].[PR_Student_Insert_Record]
 	@StudentName		varchar(100),
 	@MobileNoStudent	varchar(100),

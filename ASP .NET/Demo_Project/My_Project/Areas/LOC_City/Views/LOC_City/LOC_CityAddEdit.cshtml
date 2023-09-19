@@ -12,12 +12,16 @@
         @*<input type="hidden" asp-for="CountryID" />*@
         @Html.HiddenFor(x => x.CityID)
         <div class="my-4">
-            <select class="form-select" id="CountryID" onchange="stateChange()" aria-label="Select Country" asp-for="CountryID" asp-items="@(new SelectList(ViewBag.CountryDropdownList, "CountryID", "CountryName"))">
+            <select class="form-select" id="CountryID" onchange="stateChange()" aria-label="Select Country" asp-for="CountryID">
                 <option selected>Select Country</option>
+                @foreach (var item in Model.CountryDropdownList)
+                {
+                    <option value="@item.CountryID">@item.CountryName</option>
+                }
             </select>
         </div>
         <div class="my-4">
-            <select class="form-select" id="StateID" aria-label="Select State" asp-for="StateID" asp-items="@(new SelectList(ViewBag.StateDropdownList, "StateID", "StateName"))">
+            <select class="form-select" id="StateID" aria-label="Select State" asp-for="StateID">
                 <option selected>Select State</option>
             </select>
         </div>
@@ -31,15 +35,15 @@
             <input type="text" class="form-control" id="CityCode" name="CityCode" asp-for="CityCode" />
             <span class="form-text text-danger" asp-validation-for="CityCode"></span>
         </div>
-        <button type="submit" class="btn btn-primary" >Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
 
 @section Scripts{
     <script>
-        function stateChange(){
-            let countryID = $("#CountryID").val();
-            console.log(countryID);
+        //function stateChange(){
+            //let countryID = $("#CountryID").val();
+            //console.log(countryID);
 
             //if (countryID !== null){
             //    $("#StateID").empty();
@@ -48,25 +52,75 @@
             //        {
             //            type : "POST",
             //            contentType : "application/json; charset=utf-8",
-            //            url : "@Url.Action("", "LOC_City")" + "?&CountryID=" + countryID,
+            //            url: "@Url.Action("LOC_StateDropdownListByCountryID", "LOC_City")" + "?&CountryID=" + countryID,
             //            data : {},
             //            dataType : "json",
             //            success : function (result){
             //                $.each(result, 
             //                    function (key, value){
-            //                        $("#StateID").append($("<option></option>").val(value.StateID).html(value.StateName));
+            //                      $("#StateID").append($("<option></option>").val(value.StateID).html(value.StateName));
             //                    }
             //                );
             //            }
             //        }
             //    );
-                
+              
             //}
             //else{
             //    $("#StateID").empty();
             //    $("#StateID").append($("<option></option>").val("").html("Select State"));
             //}
-        }
+        //}
+            function stateChange() {
+                var countryID = $("#CountryID").val();
+                var stateID = @Model.StateID;
+                $.ajax({
+                    url: "@Url.Action("LOC_StateDropdownListByCountryID", "LOC_City")" + "?&CountryID=" + countryID, // Your server-side action to fetch states
+                    type: "POST",
+                    data: { CountryID: countryID }, // Pass the selected country ID
+                    dataType: "json",
+                    success: function (data) {
+                        var stateDropdown = $("#StateID");
+                        console.log("StateID : "+stateID);
+                        console.log("CountryID: "+countryID);
+                        stateDropdown.empty();
+                        if (stateID == 0) {
+                            stateDropdown.append($('<option selected disabled hidden>Select the State</option>'));
+                            $.each(data, function (index, state) {
+                                stateDropdown.append($("<option></option>").val(state.stateID).text(state.stateName));
+                            });
+                        }
+                        else {
+                            $.each(data, function (index, state) {
+                                if (state.stateID != stateID) {
+                                    stateDropdown.append($("<option></option>").val(state.stateID).text(state.stateName));
+                                }
+                                else {
+                                    stateDropdown.append($("<option selected></option>").val(state.stateID).text(state.stateName));
+                                }
+                            });
+                        }
+
+                    },
+                    error: function () {
+                        console.log("Error fetching states.");
+                    }
+                });
+            }
+
+            $(document).ready(function () {
+                stateChange(); // Initialize the state dropdown based on the initial selected country
+
+                $("#CountryID").change(function () {
+                    stateChange();
+                });
+
+                // Trigger stateChange when editing (assuming you have a hidden input field for selectedStateID)
+                var selectedCountryID = $("#CountryID").val();
+                if (selectedCountryID != null) {
+                    stateChange();
+                }
+            });
     </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

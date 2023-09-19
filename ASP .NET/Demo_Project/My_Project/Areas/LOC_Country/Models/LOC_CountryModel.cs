@@ -20,6 +20,6 @@ namespace My_Project.Areas.LOC_Country.Models
     {
         public int CountryID { get; set; }
 
-        public string CountryName { get; set; }
+        public string CountryName { get; set; } = string.Empty;
     }
 }

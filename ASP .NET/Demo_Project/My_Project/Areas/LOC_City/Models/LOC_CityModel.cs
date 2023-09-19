@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using My_Project.Areas.LOC_Country.Models;
+using My_Project.Areas.LOC_State.Models;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace My_Project.Areas.LOC_City.Models
@@ -26,5 +28,16 @@ namespace My_Project.Areas.LOC_City.Models
         [Required]
         [DisplayName("Country Name")]
         public string CountryName { get; set; } = string.Empty;
+
+        public List<LOC_CountryDropdownModel> CountryDropdownList { get; set; }
+
+        public List<LOC_StateDropdownModel> StateDropdownList { get; set; }
+    }
+
+    public class LOC_CityDropdownModel
+    {
+        public int CityID { get; set; }
+
+        public string CityName { get; set; } = string.Empty;
     }
 }

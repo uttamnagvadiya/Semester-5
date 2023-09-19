@@ -216,6 +216,8 @@ namespace My_Project.Areas.LOC_City.Controllers
                     StateID = Convert.ToInt32(item["StateID"]),
                     StateName = item["StateName"].ToString(),
                 };
+
+                stateDropdownModels.Add(model);
             }
 
             return Json(stateDropdownModels);

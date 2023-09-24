@@ -1,0 +1,151 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model My_Project.Models.StudentModel
+
+<style>
+    .lorem {
+        text-align: justify;
+    }
+</style>
+
+<div class="col-lg-12">
+    @Html.HiddenFor(x => x.StudentID)
+    <div class="row">
+        <div class="col-md-6">
+            <div class="profile-title py-2">
+                <h2 class="text-danger text-decoration-underline fw-bold"><em>Profile</em></h2>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row justify-content-end my-3">
+                <div class="col-md-2">
+                    <form method="post" asp-area="" asp-controller="" asp-action="" asp-route-CityID="">
+                        <button type="submit" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i> Edit</button>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <form method="post" asp-area="" asp-controller="" asp-action="" asp-route-CityID="">
+                        <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i> Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 ps-0">
+            <div class="student-profile">
+                <div class="card">
+                    <div class="student-profile-img card-img-top p-3">
+                        <div class="card-icon d-flex align-items-center justify-content-center">
+                            <img src="~/img/utam - Copy.jpg" alt="Profile" class="rounded-circle border border-secondary w-50 h-50 img-fluid">
+                        </div>
+                    </div>
+                    <div class="card-body my-2">
+                        <div class="student-name text-center">
+                            <h3 class="fw-bold"></h3>
+                        </div>
+                        <hr />
+                        <div class="student-branch text-center">
+                            <h6 class="text-danger fw-bold">Computer Science Engineering (CSE)</h6>
+                        </div>
+                        <hr />
+                        <div class="container p-0">
+                            <div class="mb-3">
+                                <i class="bi bi-person-vcard-fill fs-4 fw-bold mx-3"></i>
+                                <span class="">101</span>
+                            </div>
+                            <div class="mb-3">
+                                <i class="bi bi-envelope-at-fill fs-4 fw-bold mx-3"></i><span class="">uttamnagvadiya123@gmail.com</span>
+                            </div>
+                            <div class="mb-3">
+                                <i class="bi bi-telephone-fill fs-4 fw-bold mx-3"></i><span class="">+91 - 1234567890</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 p-0">
+            <div class="student-details">
+                <div class="card">
+                    <div class="card-body p-3">
+                        <p class="lorem">
+                            <em>
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            </em>
+                        </p>
+                        <div class="location mt-4">
+                            <h5><i class="bi bi-geo-alt-fill text-danger">Location</i></h5>
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr class="table-secondary">
+                                        <th>Country</th>
+                                        <th>State</th>
+                                        <th>City</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>India (IND)</td>
+                                        <td>Gujarat (GJ)</td>
+                                        <td>Rajkot (RJ)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="info-box mt-4">
+                            <div class="row justify-content-md-start">
+                                <div class="col-md-5 mx-2">
+                                    <span class="fw-bold">Gender</span>
+                                    <span class="mx-3 fw-bold">:</span>
+                                    <span>Male</span>
+                                </div>
+                                <div class="col-md-5 mx-2">
+                                    <span class="fw-bold">Active</span>
+                                    <span class="mx-3 fw-bold">:</span>
+                                    <span>Yes</span>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row justify-content-md-start">
+                                <div class="col-md-5 mx-2">
+                                    <span class="fw-bold">Date of Birth</span>
+                                    <span class="mx-3 fw-bold">:</span>
+                                    <span>05-01-2004</span>
+                                </div>
+                                <div class="col-md-5 mx-2">
+                                    <span class="fw-bold">Age</span>
+                                    <span class="mx-3 fw-bold">:</span>
+                                    <span>19</span>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row justify-content-md-start">
+                                <div class="col-md-5 mx-2">
+                                    <span class="fw-bold">Created Date</span>
+                                    <span class="mx-3 fw-bold">:</span>
+                                    <span>05-01-2004</span>
+                                </div>
+                                <div class="col-md-5 mx-2">
+                                    <span class="fw-bold">Modified Date</span>
+                                    <span class="mx-3 fw-bold">:</span>
+                                    <span>05-01-2004</span>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row justify-content-md-start">
+                                <div class="col-md-10 mx-2">
+                                    <span class="fw-bold">Address</span>
+                                    <span class="mx-3 fw-bold">:</span>
+                                    <span>Om Tirumala park - 1, Bhavnagar Highway, Mahika, Rajkot - 360003 </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -15,7 +15,7 @@
 
 body {
   font-family: "Open Sans", sans-serif;
-  background: #f6f9ff;
+  background: #eaedf1;
   color: #444444;
 }
 
@@ -912,7 +912,7 @@ h6 {
 
 /* Top Selling */
 .dashboard .top-selling {
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .dashboard .top-selling .table thead {

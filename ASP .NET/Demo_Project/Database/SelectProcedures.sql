@@ -432,41 +432,58 @@ CREATE OR ALTER PROCEDURE [dbo].[PR_Student_SelectAll]
 AS
 SELECT  [dbo].[MST_Student].[StudentID]
 	   ,[dbo].[MST_Student].[StudentName]
-	   ,[dbo].[MST_Student].[Email]
-	   ,[dbo].[MST_Student].[MobileNoStudent]
 	   ,[dbo].[MST_Student].[BranchID]
 	   ,[dbo].[MST_Branch].[BranchName]
+	   ,[dbo].[MST_Branch].[BranchCode]
 	   ,[dbo].[MST_Student].[CityID]
-	   ,[dbo].[MST_Student].[Created]
-	   ,[dbo].[MST_Student].[Modified]
+	   ,[dbo].[LOC_City].[CityName]
 FROM [dbo].[MST_Student]
 INNER JOIN [dbo].[MST_Branch]
 ON [dbo].[MST_Branch].[BranchID] = [dbo].[MST_Student].[BranchID]
-ORDER BY [dbo].[MST_Student].[StudentName]
+INNER JOIN [dbo].[LOC_City]
+ON [dbo].[LOC_City].[CityID] = [dbo].[MST_Student].[CityID]
+ORDER BY [dbo].[MST_Student].[StudentID]
 
 
 -- 2. Create Procedure for Select Student by PK.
 CREATE OR ALTER PROCEDURE [dbo].[PR_Student_SelectByPK]
 	@StudentID int
 AS
-SELECT  [dbo].[MST_Student].[StudentName]
+SELECT  [dbo].[MST_Student].[StudentID]
+	   ,[dbo].[MST_Student].[StudentName]
 	   ,[dbo].[MST_Student].[Email]
 	   ,[dbo].[MST_Student].[MobileNoStudent]
+	   ,[dbo].[MST_Student].[MobileNoFather]
 	   ,[dbo].[MST_Student].[BranchID]
 	   ,[dbo].[MST_Branch].[BranchName]
 	   ,[dbo].[MST_Branch].[BranchCode]
 	   ,[dbo].[MST_Student].[CityID]
 	   ,[dbo].[LOC_City].[CityName]
 	   ,[dbo].[LOC_City].[Citycode]
+	   ,[dbo].[LOC_State].[StateID]
+	   ,[dbo].[LOC_State].[StateName]
+	   ,[dbo].[LOC_State].[StateCode]
+	   ,[dbo].[LOC_Country].[CountryID]
+	   ,[dbo].[LOC_Country].[CountryName]
+	   ,[dbo].[LOC_Country].[CountryCode]
 	   ,[dbo].[MST_Student].[Created]
 	   ,[dbo].[MST_Student].[Modified]
+	   ,[dbo].[MST_Student].[Age]
+	   ,[dbo].[MST_Student].[Address]
+	   ,[dbo].[MST_Student].[BirthDate]
+	   ,[dbo].[MST_Student].[Gender]
+	   ,[dbo].[MST_Student].[IsActive]
 FROM [dbo].[MST_Student]
 INNER JOIN [dbo].[MST_Branch]
 ON [dbo].[MST_Branch].[BranchID] = [dbo].[MST_Student].[BranchID]
 INNER JOIN [dbo].[LOC_City]
 ON [dbo].[LOC_City].[CityID] = [dbo].[MST_Student].[CityID]
+RIGHT OUTER JOIN [dbo].[LOC_State]
+ON [dbo].[LOC_City].[StateID] = [dbo].[LOC_State].[StateID]
+RIGHT OUTER JOIN [dbo].[LOC_Country]
+ON [dbo].[LOC_City].[CountryID] = [dbo].[LOC_Country].[CountryID]
 WHERE [dbo].[MST_Student].[StudentID] = @StudentID
-ORDER BY [dbo].[MST_Student].[StudentName]
+ORDER BY [dbo].[MST_Student].[StudentID]
 
 
 -- 3. Create Insert Procedure to add new record for Student.
@@ -475,8 +492,16 @@ CREATE OR ALTER PROCEDURE [dbo].[PR_Student_Insert_Record]
 	@StudentName		varchar(100),
 	@MobileNoStudent	varchar(100),
 	@Email				varchar(100),
+	@MobileNoFather		varchar(100) = null,
+	@Address			varchar(500) = null,
+	@Password			varchar(100) = null,
+	@Gender				 varchar(50) = null,
+	@BirthDate				datetime = null,
+	@Age						 int = null,
+	@IsActive					 bit = null,
 	@BranchID					 int,
 	@CityID						 int
+	
 AS
 INSERT INTO [dbo].[MST_Student]
 (
@@ -484,7 +509,14 @@ INSERT INTO [dbo].[MST_Student]
 	[dbo].[MST_Student].[MobileNoStudent],
 	[dbo].[MST_Student].[Email],
 	[dbo].[MST_Student].[BranchID],
-	[dbo].[MST_Student].[CityID]
+	[dbo].[MST_Student].[CityID],
+	[dbo].[MST_Student].[MobileNoFather],
+	[dbo].[MST_Student].[Address],
+	[dbo].[MST_Student].[Password],
+	[dbo].[MST_Student].[Gender],
+	[dbo].[MST_Student].[BirthDate],
+	[dbo].[MST_Student].[Age],
+	[dbo].[MST_Student].[IsActive]
 )
 VALUES
 (
@@ -492,27 +524,48 @@ VALUES
 	@MobileNoStudent,
 	@Email,
 	@BranchID,
-	@CityID
+	@CityID,
+	@MobileNoFather,
+	@Address,
+	@Password,
+	@Gender,
+	@BirthDate,
+	@Age,
+	@IsActive
 )
 
 
 -- 4. Create Update Procedure to edit/modify existing record for Student.
 CREATE OR ALTER PROCEDURE [dbo].[PR_Student_UpdateByPK]
-	@StudentID					 int,
-	@BranchID					 int,
-	@CityID						 int,
 	@StudentName		varchar(100),
 	@MobileNoStudent	varchar(100),
-	@Email				varchar(100)
+	@Email				varchar(100),
+	@MobileNoFather		varchar(100) = null,
+	@Address			varchar(500) = null,
+	@Password			varchar(100) = null,
+	@Gender				 varchar(50) = null,
+	@BirthDate				datetime = null,
+	@Age						 int = null,
+	@IsActive					 bit = null,
+	@StudentID					 int,
+	@BranchID					 int,
+	@CityID						 int
 AS
 UPDATE [dbo].[MST_Student]
-	SET [dbo].[MST_Student].[StudentName] = @StudentName,
-		[dbo].[MST_Student].[MobileNoStudent] = @MobileNoStudent,
-		[dbo].[MST_Student].[Email] = @Email,
-		[dbo].[MST_Student].[BranchID] = @BranchID,
-		[dbo].[MST_Student].[CityID] = @CityID,
-		[dbo].[MST_Student].[Modified] = GETDATE()
-	WHERE [dbo].[MST_Student].[StudentID] = @StudentID
+	SET [dbo].[MST_Student].[StudentName]		= @StudentName,
+		[dbo].[MST_Student].[MobileNoStudent]	= @MobileNoStudent,
+		[dbo].[MST_Student].[Email]				= @Email,
+		[dbo].[MST_Student].[BranchID]			= @BranchID,
+		[dbo].[MST_Student].[CityID]			= @CityID,
+		[dbo].[MSt_Student].[MobileNoFather]	= @MobileNoFather,
+		[dbo].[MST_Student].[Address]			= @Address,
+		[dbo].[MST_Student].[Password]			= @Password,
+		[dbo].[MST_Student].[Gender]			= @Gender,
+		[dbo].[MST_Student].[BirthDate]			= @BirthDate,
+		[dbo].[MST_Student].[Age]				= @Age,	
+		[dbo].[MST_Student].[IsActive]			= @IsActive,
+		[dbo].[MST_Student].[Modified]			= GETDATE()
+	WHERE [dbo].[MST_Student].[StudentID]		= @StudentID
 
 
 -- 5. Create Delete Procedure to delete record into Student Table.

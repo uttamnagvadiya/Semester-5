@@ -44,7 +44,7 @@ VALUES
 )
 
 
--- 4. Create Update Procedure to edit/modeify existing record for Country.
+-- 4. Create Update Procedure to edit/modify existing record for Country.
 CREATE OR ALTER PROCEDURE [dbo].[PR_Country_UpdateByPK]
 	@CountryID				 int,
 	@CountryName	varchar(100),
@@ -174,8 +174,9 @@ WHERE [dbo].[LOC_State].[StateID] = @StateID
 
 -- 6. Search State by State Name or State Code.
 CREATE OR ALTER PROCEDURE [dbo].[PR_State_Search]
-	@StateName	varchar(100) = null,
-	@StateCode	varchar(100) = null
+	@StateName		varchar(100) = NULL,
+	@StateCode		varchar(100) = NULL,
+	@CountryName	varchar(100) = NULL
 AS
 SELECT [dbo].[LOC_State].[StateID]
       ,[dbo].[LOC_Country].[CountryName]
@@ -186,7 +187,8 @@ SELECT [dbo].[LOC_State].[StateID]
 FROM [dbo].[LOC_State]
 INNER JOIN [dbo].[LOC_Country]
 ON [dbo].[LOC_Country].[CountryID] = [dbo].[LOC_State].[CountryID]
-WHERE [dbo].[LOC_State].[StateName] LIKE CONCAT('%', @StateName, '%')
+WHERE [dbo].[LOC_Country].[CountryName] LIKE CONCAT('%', @CountryName, '%')
+AND [dbo].[LOC_State].[StateName] LIKE CONCAT('%', @StateName, '%')
 AND [dbo].[LOC_State].[StateCode] LIKE CONCAT('%', @StateCode, '%')
 ORDER BY [dbo].[LOC_Country].[CountryName]
         ,[dbo].[LOC_State].[StateName]
@@ -330,12 +332,11 @@ ORDER BY [dbo].[LOC_Country].[CountryName]
 
 -- 7. City Name for Dropdown Combobox.
 CREATE OR ALTER PROCEDURE [dbo].[PR_City_SelectForDropdown]
-	@StateID		int = null
 AS
 SELECT	[dbo].[LOC_City].[CityID]
 	   ,[dbo].[LOC_City].[CityName]
 FROM [dbo].[LOC_City]
-WHERE [dbo].[LOC_City].[StateID] = @StateID
+ORDER BY [dbo].[LOC_City].[CityName]
 
 
 
@@ -422,6 +423,15 @@ AND [dbo].[MST_Branch].[BranchCode] LIKE CONCAT('%', @BranchCode, '%')
 ORDER BY [dbo].[MST_Branch].[BranchName]
 
 
+-- 7. Branch Name for Dropdown Combobox
+CREATE OR ALTER PROCEDURE [dbo].[PR_Branch_SelectForDropdown]
+AS
+SELECT  [dbo].[MST_Branch].[BranchID]
+	   ,[dbo].[MST_Branch].[BranchName]
+FROM [dbo].[MST_Branch]
+ORDER BY [dbo].[MST_Branch].[BranchName]
+
+
 
 
 
@@ -437,6 +447,7 @@ SELECT  [dbo].[MST_Student].[StudentID]
 	   ,[dbo].[MST_Branch].[BranchCode]
 	   ,[dbo].[MST_Student].[CityID]
 	   ,[dbo].[LOC_City].[CityName]
+	   ,[dbo].[MST_Student].[Created]
 FROM [dbo].[MST_Student]
 INNER JOIN [dbo].[MST_Branch]
 ON [dbo].[MST_Branch].[BranchID] = [dbo].[MST_Student].[BranchID]
@@ -478,9 +489,9 @@ INNER JOIN [dbo].[MST_Branch]
 ON [dbo].[MST_Branch].[BranchID] = [dbo].[MST_Student].[BranchID]
 INNER JOIN [dbo].[LOC_City]
 ON [dbo].[LOC_City].[CityID] = [dbo].[MST_Student].[CityID]
-RIGHT OUTER JOIN [dbo].[LOC_State]
+INNER JOIN [dbo].[LOC_State]
 ON [dbo].[LOC_City].[StateID] = [dbo].[LOC_State].[StateID]
-RIGHT OUTER JOIN [dbo].[LOC_Country]
+INNER JOIN [dbo].[LOC_Country]
 ON [dbo].[LOC_City].[CountryID] = [dbo].[LOC_Country].[CountryID]
 WHERE [dbo].[MST_Student].[StudentID] = @StudentID
 ORDER BY [dbo].[MST_Student].[StudentID]
@@ -574,3 +585,28 @@ CREATE OR ALTER PROCEDURE [dbo].[PR_Student_DeleteByPK]
 AS
 DELETE FROM [dbo].[MST_Student]
 WHERE [dbo].[MST_Student].[StudentID] = @StudentID
+
+
+-- 6.
+CREATE OR ALTER PROCEDURE [dbo].[PR_Student_Search]
+	@StudentName	varchar(100) = NULL,
+	@BranchName		varchar(100) = NULL,
+	@CityName		varchar(100) = NULL
+AS
+SELECT  [dbo].[MST_Student].[StudentID]
+	   ,[dbo].[MST_Student].[StudentName]
+	   ,[dbo].[MST_Student].[BranchID]
+	   ,[dbo].[MST_Branch].[BranchName]
+	   ,[dbo].[MST_Branch].[BranchCode]
+	   ,[dbo].[MST_Student].[CityID]
+	   ,[dbo].[LOC_City].[CityName]
+	   ,[dbo].[MST_Student].[Created]
+FROM [dbo].[MST_Student]
+INNER JOIN [dbo].[MST_Branch]
+ON [dbo].[MST_Branch].[BranchID] = [dbo].[MST_Student].[BranchID]
+INNER JOIN [dbo].[LOC_City]
+ON [dbo].[LOC_City].[CityID] = [dbo].[MST_Student].[CityID]
+WHERE [dbo].[MST_Student].[StudentName] LIKE CONCAT('%', @StudentName, '%')
+AND [dbo].[MST_Branch].[BranchName] LIKE CONCAT('%', @BranchName, '%')
+AND [dbo].[LOC_City].[CityName] LIKE CONCAT('%', @CityName, '%')
+ORDER BY [dbo].[MST_Student].[StudentID]

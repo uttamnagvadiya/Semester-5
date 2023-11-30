@@ -179,6 +179,7 @@ namespace My_Project.Areas.LOC_State.Controllers
             SqlCommand command = connection.CreateCommand();
             command.CommandType = CommandType.StoredProcedure;
             command.CommandText = "PR_State_Search";
+            command.Parameters.AddWithValue("@CountryName", stateModel.CountryName);
             command.Parameters.AddWithValue("@StateName", stateModel.StateName);
             command.Parameters.AddWithValue("@StateCode", stateModel.StateCode);
             SqlDataReader data_reader = command.ExecuteReader();

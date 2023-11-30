@@ -11,7 +11,7 @@
 <style>
     .table-data {
         overflow-y: auto;
-        height: 71vh;
+        height: 65vh;
     }
 
         .table-data thead tr {
@@ -35,41 +35,44 @@
     </nav>
 
     <div class="card">
-        <div class="table-data">
-            <table class="table table-hover">
-                <thead>
-                    <tr class="table-primary fixed">
-                        <th scope="col">Country Name</th>
-                        <th scope="col">Country Code</th>
-                        <th scope="col">Created Date</th>
-                        <th scope="col">Modified Date</th>
-                        <th scope="col" colspan="2" class="text-center">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (System.Data.DataRow data in Model.Rows)
-                    {
-                        <tr>
-                            <td>@data["CountryName"]</td>
-                            <td>@data["CountryCode"]</td>
-                            <td>@Convert.ToDateTime(data["Created"]).ToString("dd MMM, yyyy")</td>
-                            <td>@data["Modified"]</td>
-                            <td class="text-end">
-                                <form method="post" asp-area="LOC_Country" asp-controller="LOC_Country" asp-action="LOC_CountryAddEdit" asp-route-CountryID="@data["CountryID"]">
-                                    <button type="submit" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></button>
-                                </form>
-                            </td>
-                            <td>
-                                <form method="post" asp-area="LOC_Country" asp-controller="LOC_Country" asp-action="LOC_CountryDelete" asp-route-CountryID="@data["CountryID"]">
-                                    @*<input type="hidden" name="CountryID" value="@Convert.ToInt32(data["CountryID"])" />*@
-                                    <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></button>
-                                </form>
-                            </td>
+        <h4 class="card-title ms-3">Country</h4>
+        <div class="card-body">
+            <div class="table-data">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="table-light fixed">
+                            <th scope="col">Country Name</th>
+                            <th scope="col">Country Code</th>
+                            <th scope="col">Created Date</th>
+                            <th scope="col">Modified Date</th>
+                            <th scope="col" colspan="2" class="text-center">Action</th>
                         </tr>
-                    }
+                    </thead>
+                    <tbody>
+                        @foreach (System.Data.DataRow data in Model.Rows)
+                        {
+                            <tr>
+                                <td>@data["CountryName"]</td>
+                                <td>@data["CountryCode"]</td>
+                                <td>@Convert.ToDateTime(data["Created"]).ToString("dd MMM, yyyy")</td>
+                                <td>@Convert.ToDateTime(data["Modified"]).ToString("dd MMM, yyyy")</td>
+                                <td class="text-end">
+                                    <form method="post" asp-area="LOC_Country" asp-controller="LOC_Country" asp-action="LOC_CountryAddEdit" asp-route-CountryID="@data["CountryID"]">
+                                        <button type="submit" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form method="post" asp-area="LOC_Country" asp-controller="LOC_Country" asp-action="LOC_CountryDelete" asp-route-CountryID="@data["CountryID"]">
+                                        @*<input type="hidden" name="CountryID" value="@Convert.ToInt32(data["CountryID"])" />*@
+                                        <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

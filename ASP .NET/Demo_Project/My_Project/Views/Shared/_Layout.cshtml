@@ -36,6 +36,14 @@
     <!-- Template Main CSS File -->
     <link href="~/css/style.css" rel="stylesheet">
 
+    <style>
+        body {
+            font-family: "Open Sans", sans-serif;
+            background: #d3e2ff3f;
+            color: #444444;
+        }
+    </style>
+
 </head>
 <body>
     
@@ -210,7 +218,8 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="~/img/utam - Copy.jpg" alt="Profile" class="rounded-circle img-fluid">
+                        @*<img src="~/img/utam - Copy.jpg" alt="Profile" class="rounded-circle img-fluid">*@
+                        <i class="bi bi-person-circle h3 mt-2"></i>
                         <span class="d-none d-md-block dropdown-toggle ps-2">Uttam Nagvadiya</span>
                     </a><!-- End Profile Iamge Icon -->
 
@@ -286,17 +295,17 @@
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
                         <a asp-area="LOC_Country" asp-controller="LOC_Country" asp-action="Index">
-                            <i class="bi bi-circle"></i><span>Countries</span>
+                            <i class="bi bi-circle"></i><span>Country</span>
                         </a>
                     </li>
                     <li>
                         <a asp-area="LOC_State" asp-controller="LOC_State" asp-action="Index">
-                            <i class="bi bi-circle"></i><span>States</span>
+                            <i class="bi bi-circle"></i><span>State</span>
                         </a>
                     </li>
                     <li>
                         <a asp-area="LOC_City" asp-controller="LOC_City" asp-action="Index">
-                            <i class="bi bi-circle"></i><span>Cities</span>
+                            <i class="bi bi-circle"></i><span>City</span>
                         </a>
                     </li>
                     
@@ -309,7 +318,7 @@
                 </a>
             </li><!-- End Branches Nav -->
 
-            <li class="nav-item">
+            @*<li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
@@ -422,7 +431,7 @@
                     <i class="bi bi-file-earmark"></i>
                     <span>Blank</span>
                 </a>
-            </li><!-- End Blank Page Nav -->
+            </li><!-- End Blank Page Nav -->*@
 
         </ul>
 
@@ -430,9 +439,6 @@
 
     <main id="main" class="main">
 
-        <div class="pagetitle">
-            <h1>@ViewBag.PageTitle</h1>
-        </div><!-- End Page Title -->
         @RenderBody()
 
     </main><!-- End #main -->

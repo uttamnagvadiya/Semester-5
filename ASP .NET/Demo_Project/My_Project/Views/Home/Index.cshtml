@@ -7,7 +7,7 @@
 <style>
     .table-data {
         overflow-y: auto;
-        height: 70vh;
+        height: 67vh;
     }
 
         .table-data thead tr {
@@ -20,59 +20,60 @@
     <div class="row">
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid">
-                <form class="col-md-8 d-flex" role="search" asp-area="" asp-controller="" asp-action="">
-                    <input class="form-control me-1" type="text" placeholder="Search by student name" aria-label="Search" name="">
-                    <input class="form-control me-1" type="text" placeholder="Search by branch name" aria-label="Search" name="">
+                <form class="col-md-8 d-flex" role="search" asp-area="" asp-controller="Home" asp-action="StudentSearch">
+                    <input class="form-control me-1" type="text" placeholder="Search by student name" aria-label="Search" name="StudentName">
+                    <input class="form-control me-1" type="text" placeholder="Search by branch name" aria-label="Search" name="BranchName">
+                    <input class="form-control me-1" type="text" placeholder="Search by city name" aria-label="Search" name="CityName">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
-                <form method="post" class="col-md-2" asp-area="" asp-controller="Home" asp-action="StudentAddEdit">
+                <form method="post" class="col-md-3 my-2 text-end" asp-area="" asp-controller="Home" asp-action="StudentAddEdit">
                     <button type="submit" class="btn btn-outline-primary"><i class="bi bi-plus"></i>New Student</button>
                 </form>
             </div>
         </nav>
+
         <div class="col-lg-12">
             <div class="row">
-                <!-- Student List -->
                 <div class="col-12">
-                    <div class="card top-selling mt-1">
-
-                        <div class="card-body fs-6 pt-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title fw-bold">Students</h4>
                             <div class="table-data">
-                                <table class="table table-borderless table-hover">
+                                <table class="table table-hover">
                                     <thead>
-                                        <tr class="table-primary">
+                                        <tr class="bg-light">
                                             <th scope="col">Roll No.</th>
-                                            <th scope="col">Student Name</th>
+                                            <th scope="col">Name</th>
                                             <th scope="col">Branch</th>
                                             <th scope="col">City</th>
-                                            <th scope="col"></th>
+                                            <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach (System.Data.DataRow data in Model.Rows)
                                         {
-                                            <tr>
-                                                <td>@data["StudentID"].ToString()</td>
-                                                <td>
-                                                    <div class="text-primary fw-bold">
-                                                        @data["StudentName"].ToString()
-                                                    </div>
-                                                </td>
+                                            <tr class="">
+                                                <th>@data["StudentID"].ToString()</th>
+                                                <th>
+                                                    <a asp-area="" asp-controller="Home" asp-action="StudentProfileDetails" asp-route-StudentID="@data["StudentID"]" class="text-primary">@data["StudentName"].ToString()</a>
+                                                </th>
                                                 <td>@data["BranchName"].ToString() (@data["BranchCode"].ToString())</td>
                                                 <td>@data["CityName"].ToString()</td>
-                                                <td><a asp-area="" asp-controller="Home" asp-action="StudentProfileDetails" asp-route-StudentID="@data["StudentID"]" class="btn btn-outline-dark">View</a></td>
+                                                <td>
+                                                    <form method="post" asp-area="" asp-controller="Home" asp-action="StudentDelete" asp-route-StudentID="@data["StudentID"].ToString()">
+                                                        <button type="submit" class="btn btn-outline-danger mx-1"><i class="bi bi-trash3-fill"></i></button>
+                                                    </form>
+                                                </td>
                                             </tr>
                                         }
                                     </tbody>
                                 </table>
+
                             </div>
                         </div>
-
                     </div>
-                </div><!-- End Student List -->
-
+                </div>
             </div>
         </div>
-
     </div>
 </section>

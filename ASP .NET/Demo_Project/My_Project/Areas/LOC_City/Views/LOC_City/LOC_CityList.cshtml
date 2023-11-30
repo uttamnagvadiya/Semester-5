@@ -11,7 +11,7 @@
 <style>
     .table-data {
         overflow-y: auto;
-        height: 71vh;
+        height: 65vh;
     }
 
         .table-data thead tr {
@@ -33,43 +33,47 @@
             </form>
         </div>
     </nav>
-
-    <div class="table-data">
-        <table class="table table-hover">
-            <thead>
-                <tr class="table-primary">
-                    <th scope="col">Country Name</th>
-                    <th scope="col">State Name</th>
-                    <th scope="col">City Name</th>
-                    <th scope="col">City Code</th>
-                    <th scope="col">Created Date</th>
-                    <th scope="col">Modified Date</th>
-                    <th scope="col" colspan="3" class="text-center">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (System.Data.DataRow data in Model.Rows)
-                {
-                    <tr>
-                        <td>@data["CountryName"]</td>
-                        <td>@data["StateName"]</td>
-                        <td>@data["CityName"]</td>
-                        <td>@data["CityCode"]</td>
-                        <td>@Convert.ToDateTime(data["CreationDate"]).ToString("dd MMM, yyyy")</td>
-                        <td>@data["Modified"]</td>
-                        <td class="text-end">
-                            <form method="post" asp-area="LOC_City" asp-controller="LOC_City" asp-action="LOC_CityAddEdit" asp-route-CityID="@data["CityID"]">
-                                <button type="submit" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></button>
-                            </form>
-                        </td>
-                        <td>
-                            <form method="post" asp-area="LOC_City" asp-controller="LOC_City" asp-action="LOC_CityDelete" asp-route-CityID="@data["CityID"]">
-                                <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <div class="card">
+        <h4 class="card-title ms-3">City</h4>
+        <div class="card-body">
+            <div class="table-data">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="table-light">
+                            <th scope="col">Country Name</th>
+                            <th scope="col">State Name</th>
+                            <th scope="col">City Name</th>
+                            <th scope="col">City Code</th>
+                            <th scope="col">Created Date</th>
+                            <th scope="col">Modified Date</th>
+                            <th scope="col" colspan="3" class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (System.Data.DataRow data in Model.Rows)
+                        {
+                            <tr>
+                                <td>@data["CountryName"]</td>
+                                <td>@data["StateName"]</td>
+                                <td>@data["CityName"]</td>
+                                <td>@data["CityCode"]</td>
+                                <td>@Convert.ToDateTime(data["CreationDate"]).ToString("dd MMM, yyyy")</td>
+                                <td>@Convert.ToDateTime(data["Modified"]).ToString("dd MMM, yyyy")</td>
+                                <td class="text-end">
+                                    <form method="post" asp-area="LOC_City" asp-controller="LOC_City" asp-action="LOC_CityAddEdit" asp-route-CityID="@data["CityID"]">
+                                        <button type="submit" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form method="post" asp-area="LOC_City" asp-controller="LOC_City" asp-action="LOC_CityDelete" asp-route-CityID="@data["CityID"]">
+                                        <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

@@ -3,7 +3,6 @@
 *@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.PageTitle = "States";
 }
 
 @model System.Data.DataTable;
@@ -11,7 +10,7 @@
 <style>
     .table-data {
         overflow-y: auto;
-        height: 71vh;
+        height: 65vh;
     }
 
     .table-data thead tr {
@@ -21,53 +20,59 @@
 </style>
 
 <div class="container">
-    <nav class="navbar bg-body-tertiary mb-2">
+    <nav class="navbar bg-body-tertiary mb-1">
         <div class="container-fluid">
-            <form class="d-flex w-50" role="search" asp-area="LOC_State" asp-controller="LOC_State" asp-action="LOC_StateSearch">
+            <form class="d-flex" role="search" asp-area="LOC_State" asp-controller="LOC_State" asp-action="LOC_StateSearch">
+                <input class="form-control me-2" type="text" placeholder="Search by country name" aria-label="Search" name="CountryName">
                 <input class="form-control me-2" type="text" placeholder="Search by state name" aria-label="Search" name="StateName">
                 <input class="form-control me-2" type="text" placeholder="Search by state code" aria-label="Search" name="StateCode">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
-            <form method="post" asp-area="LOC_State" asp-controller="LOC_State" asp-action="LOC_StateDropdownListByCountryID">
+            <form method="post" asp-area="LOC_State" asp-controller="LOC_State" asp-action="LOC_StateAddEdit">
                 <button type="submit" class="btn btn-outline-primary"><i class="bi bi-plus"></i>New State</button>
             </form>
         </div>
     </nav>
 
-    <div class="table-data">
-        <table class="table table-hover">
-            <thead>
-                <tr class="table-primary">
-                    <th scope="col">Country Name</th>
-                    <th scope="col">State Name</th>
-                    <th scope="col">State Code</th>
-                    <th scope="col">Created Date</th>
-                    <th scope="col">Modified Date</th>
-                    <th scope="col" colspan="3" class="text-center">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (System.Data.DataRow data in Model.Rows)
-                {
-                    <tr>
-                        <td>@data["CountryName"]</td>
-                        <td>@data["StateName"]</td>
-                        <td>@data["StateCode"]</td>
-                        <td>@Convert.ToDateTime(data["Created"]).ToString("dd MMM, yyyy")</td>
-                        <td>@data["Modified"]</td>
-                        <td class="text-end">
-                            <form method="post" asp-area="LOC_State" asp-controller="LOC_State" asp-action="LOC_StateAddEdit" asp-route-StateID="@data["StateID"]">
-                                <button type="submit" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></button>
-                            </form>
-                        </td>
-                        <td>
-                            <form method="post" asp-area="LOC_State" asp-controller="LOC_State" asp-action="LOC_StateDelete" asp-route-StateID="@data["StateID"]">
-                                <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></button>
-                            </form>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <div class="card">
+        <h4 class="card-title fw-bold ms-3">States</h4>
+        <div class="card-body">
+            <div class="table-data">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="table-light">
+                            <th scope="col">Country Name</th>
+                            <th scope="col">State Name</th>
+                            <th scope="col">State Code</th>
+                            <th scope="col">Created Date</th>
+                            <th scope="col">Modified Date</th>
+                            <th scope="col" colspan="3" class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (System.Data.DataRow data in Model.Rows)
+                        {
+                            <tr>
+                                <td>@data["CountryName"]</td>
+                                <td>@data["StateName"]</td>
+                                <td>@data["StateCode"]</td>
+                                <td>@Convert.ToDateTime(data["Created"]).ToString("dd MMM, yyyy")</td>
+                                <td>@Convert.ToDateTime(data["Modified"]).ToString("dd MMM, yyyy")</td>
+                                <td class="text-end">
+                                    <form method="post" asp-area="LOC_State" asp-controller="LOC_State" asp-action="LOC_StateAddEdit" asp-route-StateID="@data["StateID"]">
+                                        <button type="submit" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form method="post" asp-area="LOC_State" asp-controller="LOC_State" asp-action="LOC_StateDelete" asp-route-StateID="@data["StateID"]">
+                                        <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

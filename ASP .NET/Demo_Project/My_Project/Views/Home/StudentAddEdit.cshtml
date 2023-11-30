@@ -4,137 +4,123 @@
 @{
     Layout = "_Layout";
 }
+@model My_Project.Models.StudentModel;
 
 <div class="container">
     <div class="col-lg-12">
         <div class="row">
-            <form method="post">
-                <div class="mb-3">
-                    <label class="form-label"><span class="text-danger fw-bold">*</span>Student Name :</label>
-                    <input type="text" class="form-control" id="" name="" />
-                    <span class="form-text text-danger"></span>
-                </div>
-                <div class="dropdown-branch mb-3">
-                    <label class="form-label"><span class="text-danger fw-bold">*</span>Branch :</label>
-                    <select class="form-select" id="BranchDropdown" onchange="" aria-label="Select Branch">
-                        <option selected disabled>Select Branch</option>
-                        <option>CSE</option>
-                        <option>ME</option>
-                        <option>CE</option>
-                        <option>EE</option>
-                        @*@foreach (var item in Model.CountryDropdownList)
-                        {
-                        <option value="@item.CountryID">@item.CountryName</option>
-                        }*@
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label"><span class="text-danger fw-bold">*</span>Email Address :</label>
-                    <input type="text" class="form-control" id="" name="" />
-                    <span class="form-text text-danger"></span>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label"><span class="text-danger fw-bold">*</span>Student Mobile No. :</label>
-                        <input type="text" class="form-control" id="" name="" pattern="\d*" maxlength="10" />
-                        <span class="form-text text-danger"></span>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Father's Mobile No. :</label>
-                        <input type="text" class="form-control" id="" name="" pattern="\d*" maxlength="10" />
-                        <span class="form-text text-danger"></span>
-                    </div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Date of Birth :</label>
-                        <input type="date" class="form-control" id="" name="" />
-                        <span class="form-text text-danger"></span>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Age :</label>
-                        <input type="number" class="form-control" id="" name="" pattern="\d*" min="0" max="150" />
-                        <span class="form-text text-danger"></span>
-                    </div>
-                </div>
-                <div class="row justify-content-center ">
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Gender :</label>
-                        <div class="form-control">
-                            <div class="row justify-content-center px-3">
-                                <div class="col-sm-3 form-check">
-                                    <input type="radio" value="Male" class="form-check-input" id="" name="Gender" checked />
-                                    <label class="form-check-label">Male</label>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title fw-bold text-decoration-underline">Student Registration Form</h4>
+                    <form method="post" asp-area="" asp-controller="Home" asp-action="Save">
+                        @Html.HiddenFor(x => x.StudentID)
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label"><span class="text-danger fw-bold">*</span>Student Name :</label>
+                                <input type="text" class="form-control" id="" name="StudentName" asp-for="StudentName" />
+                                <span class="form-text text-danger" asp-validation-for="StudentName"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label"><span class="text-danger fw-bold">*</span>Email Address :</label>
+                                <input type="text" class="form-control" id="" name="Email" asp-for="Email" />
+                                <span class="form-text text-danger" asp-validation-for="Email"></span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+
+                            <div class="dropdown-branch col-md-6 mb-3">
+                                <label class="form-label"><span class="text-danger fw-bold">*</span>Branch :</label>
+                                <select class="form-select" id="BranchDropdown" aria-label="Select Branch" asp-for="BranchID" asp-items="@(new SelectList(Model.BranchDropdownList, "BranchID", "BranchName"))">
+                                    <option selected disabled>Select Branch</option>
+                                </select>
+                                <span class="form-text text-danger" asp-validation-for="BranchID"></span>
+                            </div>
+                            <div class="dropdown-city col-md-6 mb-3">
+                                <label class="form-label"><span class="text-danger fw-bold">*</span>City :</label>
+                                <select class="form-select" id="CityDropdown" aria-label="Select City" asp-for="CityID" asp-items="@(new SelectList(Model.CityDropdownList, "CityID", "CityName"))">
+                                    <option selected disabled>Select City</option>
+                                </select>
+                                <span class="form-text text-danger" asp-validation-for="CityID"></span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label"><span class="text-danger fw-bold">*</span>Student Mobile No. :</label>
+                                <input type="text" class="form-control" id="" name="MobileNoStudent" asp-for="MobileNoStudent" pattern="\d*" maxlength="10" />
+                                <span class="form-text text-danger" asp-validation-for="MobileNoStudent"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Father's Mobile No. :</label>
+                                <input type="text" class="form-control" id="" name="MobileNoFather" asp-for="MobileNoFather" pattern="\d*" maxlength="10" />
+                                <span class="form-text text-danger" asp-validation-for="MobileNoFather"></span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label"><span class="text-danger fw-bold">*</span>Date of Birth :</label>
+                                <input type="date" class="form-control" id="" name="BirthDate" asp-for="BirthDate" />
+                                <span class="form-text text-danger" asp-validation-for="BirthDate"></span>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Age :</label>
+                                <input type="number" class="form-control" id="" name="Age" asp-for="Age" pattern="\d*" min="0" max="150" />
+                                <span class="form-text text-danger" asp-validation-for="Age"></span>
+                            </div>
+                        </div>
+                        <div class="dropdowns row justify-content-center">
+                            
+                        </div>
+                        <div class="row justify-content-center mt-3">
+                            <div class="col-md-6 mb-3">
+                                <div class="row">
+                                    <div class="col-4"><label class="form-label">Gender :</label></div>
+                                    <div class="col-8">
+                                        <div class="row">
+                                            <div class="col-4 form-check">
+                                                <input type="radio" value="Male" class="form-check-input" id="" name="Gender" asp-for="Gender" checked />
+                                                <label class="form-check-label">Male</label>
+                                            </div>
+                                            <div class="col-4 form-check">
+                                                <input type="radio" value="Female" class="form-check-input" id="" name="Gender" asp-for="Gender" />
+                                                <label class="form-check-label">Female</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-sm-3 form-check">
-                                    <input type="radio" value="Female" class="form-check-input" id="" name="Gender" />
-                                    <label class="form-check-label">Female</label>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="activationCheck" name="IsActive" asp-for="IsActive" />
+                                    <label class="form-check-label" for="activationCheck">Active</label>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label">Active :</label>
-                        <div class="form-control">
-                            <div class="row justify-content-center px-3">
-                                <div class="col-sm-3 form-check">
-                                    <input type="radio" value=0 class="form-check-input" id="" name="IsActive" checked />
-                                    <label class="form-check-label">Yes</label>
-                                </div>
-                                <div class="col-sm-3 form-check">
-                                    <input type="radio" value=1 class="form-check-input" id="" name="IsActive" />
-                                    <label class="form-check-label">No</label>
-                                </div>
+                        <div class="mb-3">
+                            <label class="form-label">Address :</label>
+                            <textarea class="form-control" asp-for="Address"></textarea>
+                            <span class="form-text text-danger" asp-validation-for="Address"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col d-flex justify-content-start my-4">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-secondary mx-2">Reset</button>
+                            </div>
+                            <div class="col d-flex justify-content-end my-4">
+                                <a asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-outline-danger">Cancel</a>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
-                <div class="dropdowns row justify-content-center">
-                    <div class="dropdown-country col-md-4 mb-3">
-                        <label class="form-label"><span class="text-danger fw-bold">*</span>Country :</label>
-                        <select class="form-select" id="CountryDropdown" onchange="" aria-label="Select Country">
-                            <option selected disabled>Select Country</option>
-                            <option>India</option>
-                            <option>America</option>
-                            <option>Australia</option>
-                            <option>Pakistan</option>
-                            @*@foreach (var item in Model.CountryDropdownList)
-                            {
-                            <option value="@item.CountryID">@item.CountryName</option>
-                            }*@
-                        </select>
-                    </div>
-                    <div class="dropdown-state col-md-4 mb-3">
-                        <label class="form-label"><span class="text-danger fw-bold">*</span>State :</label>
-                        <select class="form-select" id="StateDropdown" onchange="" aria-label="Select State">
-                            <option selected disabled>Select State</option>
-                            <option>Gujarat</option>
-                            <option>Maharashtra</option>
-                            <option>Punjab</option>
-                            <option>Bihar</option>
-                        </select>
-                    </div>
-                    <div class="dropdown-city col-md-4 mb-3">
-                        <label class="form-label"><span class="text-danger fw-bold">*</span>City :</label>
-                        <select class="form-select" id="CityDropdown" onchange="" aria-label="Select City">
-                            <option selected disabled>Select City</option>
-                            <option>Rajkot</option>
-                            <option>Mumbai</option>
-                            <option>Jaypur</option>
-                            <option>Nagpur</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Address :</label>
-                    <textarea class="form-control"></textarea>
-                    <span class="form-text text-danger"></span>
-                </div>
-                <div class="container text-center my-5">
-                    <button type="submit" class="mx-2 btn btn-primary">Submit</button>
-                    <button type="reset" class="mx-2 btn btn-secondary">Reset</button>
-                </div>
-            </form>
+            </div>
+
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

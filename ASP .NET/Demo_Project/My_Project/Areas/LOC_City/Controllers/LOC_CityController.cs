@@ -94,8 +94,6 @@ namespace My_Project.Areas.LOC_City.Controllers
 
             #endregion
 
-
-
             if (CityID != null)
             {
                 try
@@ -108,7 +106,6 @@ namespace My_Project.Areas.LOC_City.Controllers
                     SqlDataReader sql_data_reader = sql_command.ExecuteReader();
                     data_table.Load(sql_data_reader);
                     connection.Close();
-
 
                     cityModel.CityID = Convert.ToInt32(data_table.Rows[0]["CityID"]);
                     cityModel.StateID = Convert.ToInt32(data_table.Rows[0]["StateID"]);
@@ -191,7 +188,7 @@ namespace My_Project.Areas.LOC_City.Controllers
         }
         #endregion
 
-
+        #region State List by CounrtyID...
         public IActionResult LOC_StateDropdownListByCountryID(int CountryID)
         {
             //return RedirectToRoute(new { Area = "LOC_Country", controller = "LOC_Country", action = "Index" });
@@ -222,5 +219,6 @@ namespace My_Project.Areas.LOC_City.Controllers
 
             return Json(stateDropdownModels);
         }
+        #endregion
     }
 }

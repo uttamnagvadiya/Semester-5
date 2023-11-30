@@ -16,6 +16,8 @@ namespace My_Project.Areas.LOC_State.Models
         [Required]
         [DisplayName("State Code")]
         public string StateCode { get; set; } = string.Empty;
+
+        public string CountryName { get; set; } = string.Empty;
     }
 
     public class LOC_StateDropdownModel
